@@ -96,14 +96,11 @@
 								<a href="{% url 'frontend:about' %}">About</a>
 							</li>
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="{% url 'frontend:product' %}">Shop</a>
 							</li>
 
 							<li>
-								<a href="blog.html">Blog</a>
-
-							<li>
-								<a href="contact.html">Contact</a>
+								<a href="{% url 'frontend:contact' %}">Contact</a>
 							</li>
 						</ul>
 					</div>	
@@ -189,7 +186,7 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="{% url 'index' %}">Home</a>
 					
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -200,15 +197,10 @@
 				</li>
 
 				<li>
-					<a href="">Shop</a>
+					<a href="{% url 'frontend:product' %}">Shop</a>
 				</li>
-
 				<li>
-					<a href="blog.html">Blog</a>
-				</li>
-
-				<li>
-					<a href="contact.html">Contact</a>
+					<a href="{% url 'frontend:contact' %}">Contact</a>
 				</li>
 			</ul>
 		</div>
