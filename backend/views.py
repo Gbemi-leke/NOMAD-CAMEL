@@ -6,3 +6,6 @@ from django.template.loader import render_to_string
 
 def login(request):
     return render(request, 'backend/login.html')
+
+def dashboard(request):
+    return render(request, 'backend/index.html')
