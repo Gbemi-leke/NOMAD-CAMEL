@@ -5,8 +5,16 @@ from backend import views
 app_name = 'backend'
 
 urlpatterns = [
-    path('login', views.login, name='login'),
+    path('login', views.login_view, name='login'),
     path('register', views.register, name='register'),
     path('dashboard', views.dashboard, name='dashboard'),
+    path('products/', views.product_list, name='product-list'),
+    path('products/add/', views.add_product, name='add-product'),
+    path('products/edit/<int:pk>/', views.edit_product, name='edit-product'),
+    path('products/delete/<int:pk>/', views.delete_product, name='delete-product'),
+    path('users/', views.user_list, name='user-list'),
+    path('users/add/', views.add_user, name='add-user'),
+    path('users/edit/<int:pk>/', views.edit_user, name='edit-user'),
+    path('users/delete/<int:pk>/', views.delete_user, name='delete-user'),
 
 ]

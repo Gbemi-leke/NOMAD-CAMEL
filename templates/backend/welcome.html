@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to NOMAD-CAMEL</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+      padding: 30px;
+      color: #343a40;
+    }
+    .email-container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      width: 60px;
+    }
+    .title {
+      text-align: center;
+      color: #00b894;
+      font-size: 24px;
+    }
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      background-color: #00b894;
+      color: #ffffff;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="logo">
+      <img src="https://yourdomain.com/static/frontend/images/icons/logo-01.png" alt="NOMAD-CAMEL Logo">
+    </div>
+    <div class="title">Welcome, {{ user.username }}! ⚡</div>
+    <p>Hello {{ user.username }},</p>
+    <p>Thanks for registering at <strong>NOMAD-CAMEL</strong>, your go-to store for premium power banks and adventure tech!</p>
+    <p>You can now log in and explore all our charging solutions made for fast, reliable energy on the move.</p>
+    
+    <div style="text-align: center;">
+      <a href="http://127.0.0.1:8000/" class="button">Visit Our Shop</a>
+    </div>
+
+    <p style="margin-top: 30px;">Stay charged,<br><strong>NOMAD-CAMEL Team 🐪⚡</strong></p>
+
+    <div class="footer">
+      &copy; {{ year }} NOMAD-CAMEL. All rights reserved.
+    </div>
+  </div>
+</body>
+</html>
