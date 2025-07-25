@@ -5,7 +5,7 @@ from django.utils.timezone import now
 from django.conf import settings
 from backend.forms import *
 from backend.models import *
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from frontend.models import *
@@ -14,6 +14,9 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import timedelta
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth import update_session_auth_hash
 
 
 
@@ -93,8 +96,12 @@ def register(request):
         form = RegisterForm()
     return render(request, 'backend/register.html', {'form': form})
 
+@login_required(login_url='/backend/login/')
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
-
+@login_required(login_url='/backend/login/')
 def dashboard(request):
     
     total_users = User.objects.count()
@@ -129,7 +136,7 @@ def dashboard(request):
     }
     return render(request, 'backend/index.html', context)
 
-
+@login_required(login_url='/backend/login/')
 def add_product(request):
     product = None
     if request.method == 'POST':
@@ -185,7 +192,7 @@ def add_product(request):
     }
     return render(request, 'backend/add-products.html', context)
 
-
+@login_required(login_url='/backend/login/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     try:
@@ -225,20 +232,24 @@ def edit_product(request, pk):
     }
     return render(request, 'backend/edit-products.html', context)
 
+@login_required(login_url='/backend/login/')
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     messages.success(request, 'Product deleted successfully.')
     return redirect('backend:product-list')
 
+@login_required(login_url='/backend/login/')
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'backend/view-product-list.html', {'products': products})
 
+@login_required(login_url='/backend/login/')
 def user_list(request):
     users = User.objects.all().order_by('username')
     return render(request, 'backend/view-user.html', {'users': users})
 
+@login_required(login_url='/backend/login/')
 def add_user(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
@@ -250,6 +261,7 @@ def add_user(request):
         form = RegisterForm()
     return render(request, 'backend/add-user.html', {'form': form})
 
+@login_required(login_url='/backend/login/')
 def edit_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -264,9 +276,28 @@ def edit_user(request, pk):
     return render(request, 'backend/edit-user.html', {'form': form, 'user': user})
 
 
+@login_required(login_url='/backend/login/')
 def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
         user.delete()
         messages.success(request, 'User deleted successfully.')
         return redirect('backend:user_list')
+    
+
+@login_required(login_url='/backend/login/')
+def account(request):
+    return render(request, 'backend/account-details.html')
+
+@login_required(login_url='/backend/login/')
+def change_password(request):
+    if request.method == 'POST':
+        change_password = PasswordChangeForm(data=request.POST,
+        user=request.user)
+        if change_password.is_valid():
+            change_password.save()
+            update_session_auth_hash(request, change_password.user)
+            messages.success(request, 'Password changed successfully.')
+    else:
+        change_password = PasswordChangeForm(user=request.user)
+    return render(request, 'backend/change-password.html', {'pass_key':change_password})
