@@ -91,7 +91,8 @@
               <h4 class="mb-2">Welcome to NOMAD-CAMEL! 👋</h4>
               <p class="mb-4">Please sign-in to your account and get started</p>
 
-              <form id="formAuthentication" class="mb-3" action="{% url 'index' %}" method="POST">
+              <form id="formAuthentication" class="mb-3" method="POST">
+                {% csrf_token %}
                 <div class="mb-3">
                   <label for="email" class="form-label">Email or Username</label>
                   <input
@@ -125,7 +126,7 @@
                 <div class="mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                    <label class="form-check-label" for="remember-me" name="remember-me"> Remember Me </label>
                   </div>
                 </div>
                 <div class="mb-3">
@@ -135,7 +136,7 @@
 
               <p class="text-center">
                 <span>New on our platform?</span>
-                <a href="auth-register-basic.html">
+                <a href="{% url 'backend:register' %}">
                   <span>Create an account</span>
                 </a>
               </p>

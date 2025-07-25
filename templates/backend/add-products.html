@@ -1,0 +1,133 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+{% block title %}
+  NOMAD-CAMEL
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+      <span class="text-muted fw-light">Add /</span> Product
+    </h4>
+    <div class="row">
+      <div class="col-lg-8 mb-4 order-0">
+          <div class="card mb-4">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">Add a Product</h5>
+              <small class="text-muted float-end">Complete all fields before saving</small>
+            </div>
+            <div class="card-body">
+              <form method="POST" enctype="multipart/form-data">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% csrf_token %}
+
+                <!-- Product Info -->
+                <div class="mb-3">
+                  {{ product_form.name.label_tag }}
+                  {{ product_form.name }}
+                </div>
+
+                <div class="mb-3">
+                  {{ product_form.description.label_tag }}
+                  {{ product_form.description }}
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    {{ product_form.price.label_tag }}
+                    {{ product_form.price }}
+                  </div>
+                   <div class="col-md-6 mb-3">
+                    {{ product_form.quantity.label_tag }}
+                    {{ product_form.quantity }}
+                  </div>
+
+                </div>
+
+                <div class="form-check mb-4">
+                  {{ product_form.is_active }} {{ product_form.is_active.label_tag }}
+                </div>
+
+                <hr>
+
+                <!-- Product Images -->
+                <div class="mb-3">
+                  <label for="id_images" class="form-label">Upload Images</label>
+                  {{ image_form.images }}
+                  <small class="form-text text-muted">You can select multiple images</small>
+                </div>
+
+                <hr>
+
+                <!-- Product Sizes -->
+                <h5>Product Sizes</h5>
+                <div id="sizes-container">
+                  <!-- Initially render one size form -->
+                  <div class="row mb-3 size-form">
+                    <div class="col-md-6">
+                      {{ size_form.size.label_tag }}
+                      {{ size_form.size }}
+                    </div>
+                    <div class="col-md-4">
+                      {{ size_form.quantity.label_tag }}
+                      {{ size_form.quantity }}
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                      <button type="button" class="btn btn-danger remove-size">X</button>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-info mb-3" id="add-size">Add Size</button> <br>
+
+                <button type="submit" class="btn btn-primary">{{ context_action|default:"Add Product" }}</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById("add-size").addEventListener("click", function () {
+    const container = document.getElementById("sizes-container");
+    const clone = container.querySelector(".size-form").cloneNode(true);
+
+    // Clear input values in the cloned form
+    clone.querySelectorAll("select, input").forEach(el => {
+      if (el.type === "number") {
+        el.value = 0;
+      } else {
+        el.selectedIndex = 0;
+      }
+    });
+
+    container.appendChild(clone);
+  });
+
+  // Optional: Remove a size form
+  document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-size")) {
+      const form = e.target.closest(".size-form");
+      const allForms = document.querySelectorAll(".size-form");
+      if (allForms.length > 1) {
+        form.remove();
+      }
+    }
+  });
+</script>
+
+{% endblock %}
