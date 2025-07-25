@@ -13,6 +13,8 @@ from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import timedelta
+from django.contrib import messages
+
 
 
 
@@ -129,6 +131,7 @@ def dashboard(request):
 
 
 def add_product(request):
+    product = None
     if request.method == 'POST':
         product_form = ProductForm(request.POST)
         image_form = ProductImageForm(request.POST, request.FILES)
@@ -137,29 +140,51 @@ def add_product(request):
         if product_form.is_valid() and image_form.is_valid() and size_form.is_valid():
             product = product_form.save()
 
-            # Save the single size with product
             size = size_form.save(commit=False)
             size.product = product
             size.save()
 
-            # Save multiple images
             images = request.FILES.getlist('images')
             for img in images:
                 ProductImage.objects.create(product=product, image=img)
 
-            return redirect('backend:dashboard')
+            # ✅ Show success message and keep form in edit mode
+            messages.success(request, 'Product added successfully! You can now continue editing it.')
+
+            # Re-initialize forms with the saved product for editing
+            product_form = ProductForm(instance=product)
+            size_form = ProductSizeForm(instance=size)
+            image_form = ProductImageForm()
+            
+            product_images = ProductImage.objects.filter(product=product)
+
+            context = {
+                'product_form': product_form,
+                'image_form': image_form,
+                'size_form': size_form,
+                'context_action': 'Update Product',  
+                'product': product,
+                'product_images': product_images,
+      
+            }
+            return render(request, 'backend/add-products.html', context)
 
     else:
         product_form = ProductForm()
         image_form = ProductImageForm()
         size_form = ProductSizeForm()
+        
+        product_images = ProductImage.objects.filter(product=product)
 
     context = {
         'product_form': product_form,
         'image_form': image_form,
         'size_form': size_form,
+        'context_action': 'Add Product',
+       
     }
     return render(request, 'backend/add-products.html', context)
+
 
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -184,8 +209,8 @@ def edit_product(request, pk):
             images = request.FILES.getlist('images')
             for img in images:
                 ProductImage.objects.create(product=product, image=img)
-
-            return redirect('backend:dashboard')
+            messages.success(request, 'Product editted successfully!')
+            return redirect('backend:product-list')
 
     else:
         product_form = ProductForm(instance=product)
@@ -198,24 +223,21 @@ def edit_product(request, pk):
         'image_form': image_form,
         'product': product,
     }
-    return render(request, 'backend/edit_product.html', context)
+    return render(request, 'backend/edit-products.html', context)
 
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
-
-    if request.method == 'POST':
-        product.delete()
-        return redirect('backend:dashboard')
-
-    return render(request, 'backend/delete_product.html', {'product': product})
+    product.delete()
+    messages.success(request, 'Product deleted successfully.')
+    return redirect('backend:product-list')
 
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'backend/product_list.html', {'products': products})
+    return render(request, 'backend/view-product-list.html', {'products': products})
 
 def user_list(request):
-    users = User.objects.all()
-    return render(request, 'backend/user_list.html', {'users': users})
+    users = User.objects.all().order_by('username')
+    return render(request, 'backend/view-user.html', {'users': users})
 
 def add_user(request):
     if request.method == 'POST':
@@ -226,19 +248,21 @@ def add_user(request):
             return redirect('backend:user_list')
     else:
         form = RegisterForm()
-    return render(request, 'backend/add_user.html', {'form': form})
+    return render(request, 'backend/add-user.html', {'form': form})
 
 def edit_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
-        form = RegisterForm(request.POST, request.FILES, instance=user)
+        form = EditUserForm(request.POST, request.FILES, instance=user, user_id=user.pk)
         if form.is_valid():
             form.save()
             messages.success(request, 'User updated successfully.')
-            return redirect('backend:user_list')
+            return redirect('backend:user-list')
     else:
-        form = RegisterForm(instance=user)
-    return render(request, 'backend/edit_user.html', {'form': form, 'user': user})
+        form = EditUserForm(instance=user, user_id=user.pk)
+
+    return render(request, 'backend/edit-user.html', {'form': form, 'user': user})
+
 
 def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
@@ -246,4 +270,3 @@ def delete_user(request, pk):
         user.delete()
         messages.success(request, 'User deleted successfully.')
         return redirect('backend:user_list')
-    return render(request, 'backend/delete_user.html', {'user': user})

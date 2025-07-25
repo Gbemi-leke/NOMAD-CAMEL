@@ -1,0 +1,83 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+{% block title %}View Users{% endblock %}
+
+{% block content %}
+<div class="layout-page">
+  <div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Users /</span> List
+      </h4>
+      <div class="card">
+        <h5 class="card-header">Users</h5>
+        <div class="table-responsive text-nowrap">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Photo</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+              {% for user in users %}
+              <tr>
+                <td><strong>{{ user.username }}</strong></td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.profile.phone|default:"-" }}</td>
+                <td>{{ user.profile.get_gender_display|default:"-" }}</td>
+                <td>
+                  {% if user.profile.profile_photo %}
+                  <img src="{{ user.profile.profile_photo.url }}" alt="Profile photo" class="rounded-circle" width="40"
+                    height="40">
+                  {% else %}
+                  <span class="text-muted">No photo</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if user.is_active %}
+                  <span class="badge bg-label-success">Active</span>
+                  {% else %}
+                  <span class="badge bg-label-danger">Inactive</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div class="dropdown">
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                      <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{% url 'backend:edit-user' user.pk %}">
+                        <i class="bx bx-edit-alt me-1"></i> Edit
+                      </a>
+                      <a class="dropdown-item" href="{% url 'backend:delete-user' user.pk %}">
+                        <i class="bx bx-trash me-1"></i> Delete
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="8" class="text-center">No users found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+
+<div class="layout-overlay layout-menu-toggle"></div>
+{% endblock %}

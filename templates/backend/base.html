@@ -50,11 +50,14 @@
     <!-- Page CSS -->
 
     <!-- Helpers -->
-        <script src="{% static 'backend/assets/vendor/js/helpers.js' }"></script>
+        <script src="{% static 'backend/assets/vendor/js/helpers.js' %}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{% static 'backend/assets/js/config.js' %}"></script>
+    <!-- Bootstrap Bundle with Popper (latest version) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   </head>
 
   <body>
@@ -102,14 +105,31 @@
                     <div data-i18n="Without menu">Add Product</div>
                   </a>
                 </li>
+                
                 <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="Without navbar">Edit Product</div>
+                  <a href="{% url 'backend:product-list' %}" class="menu-link">
+                    <div data-i18n="Container">View All Products</div>
                   </a>
                 </li>
+                
+              </ul>
+            </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons  bx bx-user"></i>
+                <div data-i18n="Layouts">Users</div>
+              </a>
+
+              <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">View All Products</div>
+                  <a href="{% url 'backend:add-user' %}" class="menu-link">
+                    <div data-i18n="Without menu">Add Users</div>
+                  </a>
+                </li>
+                
+                <li class="menu-item">
+                  <a href="{% url 'backend:user-list' %}" class="menu-link">
+                    <div data-i18n="Container">View All User</div>
                   </a>
                 </li>
                 
@@ -130,16 +150,8 @@
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
-                    <div data-i18n="Notifications">Notifications</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
-                    <div data-i18n="Connections">Connections</div>
-                  </a>
-                </li>
+               
+                
               </ul>
             </li>
            
@@ -152,6 +164,17 @@
 {% endblock %}
 </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.menu-toggle').forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const parent = this.closest('.menu-item');
+        parent.classList.toggle('open');
+      });
+    });
+  });
+</script>
+
 <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
 <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
 <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>

@@ -2,23 +2,22 @@
 {% load static %}
 <!DOCTYPE html>
 {% block title %}
-Add Product
+Edit Product
 {% endblock %}
 
 {% block content %}
 <div class="layout-page">
   <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
-      <img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO" style=" width: 45px;"> <h4 class="fw-bold py-3 mb-4">Add Product </h4>
+      <img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO" style="width: 45px;">
+      <h4 class="fw-bold py-3 mb-4">Edit Product</h4>
 
-      <!-- Basic Layout & Basic with Icons -->
       <div class="row">
-        <!-- Basic Layout -->
         <div class="col-xxl">
           <div class="card mb-4">
             <div class="card-header d-flex align-items-center justify-content-between">
-              <h5 class="mb-0">Add a Product</h5>
-              <small class="text-muted float-end">Complete all fields before saving</small>
+              <h5 class="mb-0">Edit Product - {{ product.name }}</h5>
+              <small class="text-muted float-end">Modify the fields and save changes</small>
             </div>
             <div class="card-body">
               <form method="POST" enctype="multipart/form-data">
@@ -48,11 +47,10 @@ Add Product
                     {{ product_form.price.label_tag }}
                     {{ product_form.price }}
                   </div>
-                   <div class="col-md-6 mb-3">
+                  <div class="col-md-6 mb-3">
                     {{ product_form.quantity.label_tag }}
                     {{ product_form.quantity }}
                   </div>
-
                 </div>
 
                 <div class="form-check mb-4">
@@ -63,9 +61,9 @@ Add Product
 
                 <!-- Product Images -->
                 <div class="mb-3">
-                  <label for="id_images" class="form-label">Upload Images</label>
+                  <label for="id_images" class="form-label">Add New Images</label>
                   {{ image_form.images }}
-                  <small class="form-text text-muted">You can select multiple images</small>
+                  <small class="form-text text-muted">You can select multiple images to add</small>
                 </div>
 
                 <hr>
@@ -73,7 +71,6 @@ Add Product
                 <!-- Product Sizes -->
                 <h5>Product Sizes</h5>
                 <div id="sizes-container">
-                  <!-- Initially render one size form -->
                   <div class="row mb-3 size-form">
                     <div class="col-md-6">
                       {{ size_form.size.label_tag }}
@@ -91,13 +88,11 @@ Add Product
 
                 <button type="button" class="btn btn-info mb-3" id="add-size">Add Size</button> <br>
 
-                <button type="submit" class="btn btn-primary">{{ context_action|default:"Add Product" }}</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
               </form>
-
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

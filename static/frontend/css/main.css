@@ -1213,6 +1213,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  background-image: url("/static/frontend/images/slide-01.jpg");
 }
 
 .rs1-slick1 .item-slick1 {
@@ -1223,9 +1224,10 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   height: 100vh;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 767px) {
   .item-slick1 {
     height: calc(100vh - 70px) !important;
+    background-image: url("/static/frontend/images/mobile-slide.png");
   }
 }
 
@@ -1263,7 +1265,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .arrow-slick1:hover {
-  color: #7280e0;
+  color: green;
 }
 
 .next-slick1 {
@@ -1292,7 +1294,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .rs2-slick1 .arrow-slick1:hover {
-  color: #7280e0;
+  color: green;
 }
 
 .wrap-slick1-dots {
