@@ -18,6 +18,7 @@ urlpatterns = [
     path('users/edit/<int:pk>/', views.edit_user, name='edit-user'),
     path('users/delete/<int:pk>/', views.delete_user, name='delete-user'),
     path('account', views.account, name='account'),
-     path('account-change-password', views.change_password, name='change_password'),
+    path('edit-account', views.edit_account, name='edit_account'),
+    path('account-change-password', views.change_password, name='change_password'),
 
 ]

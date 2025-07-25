@@ -290,6 +290,10 @@ def account(request):
     return render(request, 'backend/account-details.html')
 
 @login_required(login_url='/backend/login/')
+def edit_account(request):
+    return render(request, 'backend/edit-account-details.html')
+
+@login_required(login_url='/backend/login/')
 def change_password(request):
     if request.method == 'POST':
         change_password = PasswordChangeForm(data=request.POST,
