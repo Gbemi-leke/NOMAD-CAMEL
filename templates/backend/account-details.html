@@ -67,19 +67,15 @@
                             <label class="form-label" for="phoneNumber">Phone Number</label>
                             <div class="input-group input-group-merge">
                               <span class="input-group-text">NG (+234)</span>
-                              <p style="font-size: 18px;">{{ user.phone }}</p>
+                              <p style="font-size: 18px;">{{ user.profile.phone|default:"-" }}</p>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="address" class="form-label">Gender</label>
-                            <p style="font-size: 18px;">{{ user.gender }}</p>
+                            <p style="font-size: 18px;">{{ user.profile.get_gender_display|default:"-" }}</p>
                           </div>
                          
                          
-                        </div>
-                        <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                         </div>
                       </form>
                     </div>

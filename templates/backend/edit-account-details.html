@@ -33,91 +33,75 @@
                     <h5 class="card-header">Profile Details</h5>
                     <!-- Account -->
                     <div class="card-body">
-                      <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="{{ user.profile.profile_photo.url }}"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
-                        <div class="button-wrapper">
-                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                            <span class="d-none d-sm-block">Upload new photo</span>
-                            <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input
-                              type="file"
-                              id="upload"
-                              class="account-file-input"
-                              hidden
-                              accept="image/png, image/jpeg"
-                            />
-                          </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Reset</span>
-                          </button>
-
-                          <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 3Mb</p>
-                        </div>
-                      </div>
+                      
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      <form method="POST" enctype="multipart/form-data" novalidate>
+                       
+
+                        {% if messages %}
+                          {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                          {% endfor %}
+                        {% endif %}
+                        <div class="d-flex align-items-start align-items-sm-center gap-4 mb-5">
+                          <img
+                            src="{{ user.profile.profile_photo.url }}"
+                            alt="user-avatar"
+                            class="d-block rounded"
+                            height="100"
+                            width="100"
+                            id="uploadedAvatar"
+                          />
+                          <div class="button-wrapper">               
+                              {{ form.profile_photo }}
+                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 3Mb</p>
+                          </div>
+                        </div>
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              id="firstName"
-                              name="firstName"
-                              value="Nomad"
-                              autofocus
-                            />
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                            {{ form.first_name }}
+                            {{ form.first_name.errors }}
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input class="form-control" type="text" name="lastName" id="lastName" value="Camel" />
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                            {{ form.last_name }}
+                            {{ form.last_name.errors }}
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              id="email"
-                              name="email"
-                              value="abc@example.com"
-                              placeholder="abc@example.com"
-                            />
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                            {{ form.username }}
+                            {{ form.username.errors }}
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">E-mail</label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
                           </div>
                           
                           <div class="mb-3 col-md-6">
-                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                            <label class="form-label" for="{{ form.phone.id_for_label }}">Phone Number</label>
                             <div class="input-group input-group-merge">
                               <span class="input-group-text">NG (+234)</span>
-                              <input
-                                type="text"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                class="form-control"
-                                placeholder="202 555 0111"
-                              />
+                              {{ form.phone }}
+                              {{ form.phone.errors }}
                             </div>
                           </div>
                           <div class="mb-6 col-md-13">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea type="text" class="form-control" id="address" name="address" placeholder="Address" ></textarea>
+                            <label for="{{ form.gender.id_for_label }}" class="form-label">Gender</label>
+                            {{ form.gender }}
+                            {{ form.gender.errors }}
                           </div>
                          
                          
                         </div>
                         <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                          <button type="submit" class="btn btn-primary mt-2">Save changes</button>
+                          <button type="reset" class="btn btn-outline-secondary mt-2">Cancel</button>
                         </div>
+                        {% csrf_token %}
                       </form>
                     </div>
                     <!-- /Account -->

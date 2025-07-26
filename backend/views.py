@@ -290,8 +290,17 @@ def account(request):
     return render(request, 'backend/account-details.html')
 
 @login_required(login_url='/backend/login/')
-def edit_account(request):
-    return render(request, 'backend/edit-account-details.html')
+def edit_account(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = EditAccount(request.POST, request.FILES, instance=user, user_id=user.pk)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User updated successfully.')
+            return redirect('backend:account')
+    else:
+        form = EditAccount(instance=user, user_id=user.pk)
+    return render(request, 'backend/edit-account-details.html', {'form': form, 'user': user})
 
 @login_required(login_url='/backend/login/')
 def change_password(request):

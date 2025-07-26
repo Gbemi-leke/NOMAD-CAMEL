@@ -151,6 +151,11 @@
                   </a>
                 </li>
                 <li class="menu-item">
+                  <a href="{% url 'backend:edit_account' user.pk  %}" class="menu-link">
+                    <div data-i18n="Account">Edit Account</div>
+                  </a>
+                </li>
+                <li class="menu-item">
                   <a href="{% url 'backend:change_password' %}" class="menu-link">
                     <div data-i18n="Account">Change Password</div>
                   </a>
@@ -228,7 +233,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="{% url 'backend:edit_account' %}">
+                      <a class="dropdown-item" href="{% url 'backend:edit_account' user.pk  %}">
                         <i class="bx bx-cog me-2"></i>
                         <span class="align-middle">Settings</span>
                       </a>
