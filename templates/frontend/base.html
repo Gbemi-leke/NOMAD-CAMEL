@@ -1,48 +1,53 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>
-        {% block title %}
-            NOMAD-CAMEL
-        {% endblock %}
-</title>
-	
+	<title>
+		{% block title %}
+		NOMAD-CAMEL
+		{% endblock %}
+	</title>
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{% static 'frontend/images/icons/favicon.png' %}"/>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'frontend/images/icons/favicon.png' %}" />
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/bootstrap/css/bootstrap.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'frontend/fonts/iconic/css/material-design-iconic-font.min.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css"
+		href="{% static 'frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css"
+		href="{% static 'frontend/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/fonts/linearicons-v1.0.0/icon-font.min.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/animate/animate.css' %}">
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/css-hamburgers/hamburgers.min.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/animsition/css/animsition.min.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/select2/select2.min.css' %}">
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/daterangepicker/daterangepicker.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/slick/slick.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/MagnificPopup/magnific-popup.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'frontend/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css"
+		href="{% static 'frontend/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'frontend/css/main.css' %}">
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 </head>
+
 <body class="animsition">
-	
+
 	<!-- Header -->
 	{% if request.user.is_authenticated %}
 	<header>
@@ -56,7 +61,7 @@
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
-						
+
 
 						<a href="{% url 'backend:dashboard' %}" class="flex-c-m trans-04 p-lr-25">
 							My Account
@@ -65,17 +70,17 @@
 							Log Out
 						</a>
 
-						
 
-						
+
+
 					</div>
 				</div>
 			</div>
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
-					
-					<!-- Logo desktop -->		
+
+					<!-- Logo desktop -->
 					<a href="{% url 'index' %}" class="logo">
 						<img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO">
 					</a>
@@ -97,8 +102,22 @@
 							<li>
 								<a href="{% url 'frontend:contact' %}">Contact</a>
 							</li>
+							{% if request.user.is_authenticated %}
+							<li>
+								<a href="{% url 'backend:dashboard' %}" class="flex-c-m trans-04 p-lr-25">
+									My Account
+								</a>
+
+							</li>
+							<li>
+
+								<a href="{% url 'backend:logout_view' %}" class="flex-c-m trans-04 p-lr-25">
+									Log Out
+								</a>
+							</li>
+							{% endif %}
 						</ul>
-					</div>	
+					</div>
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
@@ -106,7 +125,8 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+							data-notify="2">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
@@ -115,14 +135,15 @@
 						</a> -->
 					</div>
 				</nav>
-			</div>	
+			</div>
 		</div>
 
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
+			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="{% url 'index' %}"><img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+				<a href="{% url 'index' %}"><img src="{% static 'frontend/images/icons/logo-01.png' %}"
+						alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -131,7 +152,8 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+					data-notify="2">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
 
@@ -169,7 +191,7 @@
 						<a href="{% url 'backend:logout_view' %}" class="flex-c-m p-lr-10 trans-04">
 							Log out
 						</a>
-						
+
 
 					</div>
 				</li>
@@ -220,7 +242,7 @@
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
-						
+
 
 						<a href="{% url 'backend:register' %}" class="flex-c-m trans-04 p-lr-25">
 							Register
@@ -229,17 +251,17 @@
 							Login
 						</a>
 
-						
 
-						
+
+
 					</div>
 				</div>
 			</div>
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
-					
-					<!-- Logo desktop -->		
+
+					<!-- Logo desktop -->
 					<a href="{% url 'index' %}" class="logo">
 						<img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO">
 					</a>
@@ -251,7 +273,7 @@
 								<a href="{% url 'index' %}">Home</a>
 							</li>
 
-							
+
 							</li>
 
 							<li>
@@ -265,7 +287,7 @@
 								<a href="{% url 'frontend:contact' %}">Contact</a>
 							</li>
 						</ul>
-					</div>	
+					</div>
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
@@ -273,7 +295,8 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+							data-notify="2">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
@@ -282,14 +305,15 @@
 						</a> -->
 					</div>
 				</nav>
-			</div>	
+			</div>
 		</div>
 
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
+			<!-- Logo moblie -->
 			<div class="logo-mobile">
-				<a href="{% url 'index' %}"><img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+				<a href="{% url 'index' %}"><img src="{% static 'frontend/images/icons/logo-01.png' %}"
+						alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header -->
@@ -298,7 +322,8 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
+					data-notify="2">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
 
@@ -337,7 +362,7 @@
 							Login
 						</a>
 
-						
+
 
 					</div>
 				</li>
@@ -392,7 +417,7 @@
 					<i class="zmdi zmdi-close"></i>
 				</div>
 			</div>
-			
+
 			<div class="header-cart-content flex-w js-pscroll">
 				<ul class="header-cart-wrapitem w-full">
 					<li class="header-cart-item flex-w flex-t m-b-12">
@@ -412,18 +437,20 @@
 					</li>
 
 				</ul>
-				
+
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
 						Total: &#8358 75.00
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="{% url 'frontend:cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="{% url 'frontend:cart' %}"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="{% url 'frontend:cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="{% url 'frontend:cart' %}"
+							class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>
@@ -433,10 +460,10 @@
 	</div>
 
 
-    {% block content%}
+	{% block content%}
 
-    {% endblock %}
-    <!-- Footer -->
+	{% endblock %}
+	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
@@ -487,7 +514,7 @@
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns 
+								Returns
 							</a>
 						</li>
 
@@ -511,7 +538,7 @@
 					</h4>
 
 					<p class="stext-107 cl7 size-201">
-						Any questions? 
+						Any questions?
 						call us on (+234) 81 680 33 333
 					</p>
 
@@ -537,7 +564,8 @@
 
 					<form>
 						<div class="wrap-input1 w-full p-b-4">
-							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="nomadcamelngpb@gmail.com">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="nomadcamelngpb@gmail.com">
 							<div class="focus-input1 trans-04"></div>
 						</div>
 
@@ -552,15 +580,18 @@
 
 			<div class="p-t-10">
 				<div class="flex-c-m flex-w p-b-18">
-				
-						<img src="{% static 'frontend/images/icons/logo-02.png' %}" alt="NOMAD-CAMEL" style="width: auto; height: 100px;">
-					
+
+					<img src="{% static 'frontend/images/icons/logo-02.png' %}" alt="NOMAD-CAMEL"
+						style="width: auto; height: 100px;">
+
 				</div>
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> NOMAD-CAMEL <i class="fa fa-heart-o" aria-hidden="true"></i> 
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>document.write(new Date().getFullYear());</script> NOMAD-CAMEL <i class="fa fa-heart-o"
+						aria-hidden="true"></i>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
 			</div>
@@ -584,154 +615,162 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NOMAD
 					<img src="{% static 'frontend/images/icons/icon-close.png' %}" alt="CLOSE">
 				</button>
 				{% if pro %}
-            		{% for p in pro %}
-						<div class="row">
-							<div class="col-md-6 col-lg-7 p-b-30">
-								<div class="p-l-25 p-r-30 p-lr-0-lg">
-									<div class="wrap-slick3 flex-sb flex-w">
-										<div class="wrap-slick3-dots"></div>
-										<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+				{% for p in pro %}
+				<div class="row">
+					<div class="col-md-6 col-lg-7 p-b-30">
+						<div class="p-l-25 p-r-30 p-lr-0-lg">
+							<div class="wrap-slick3 flex-sb flex-w">
+								<div class="wrap-slick3-dots"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
-										<div class="slick3 gallery-lb">
-											<div class="item-slick3" data-thumb="{{ p.images.first.image.url }}">
-												<div class="wrap-pic-w pos-relative">
-													<img src="{{ p.images.first.image.url }}" alt="IMG-PRODUCT">
+								<div class="slick3 gallery-lb">
+									<div class="item-slick3" data-thumb="{{ p.images.first.image.url }}">
+										<div class="wrap-pic-w pos-relative">
+											<img src="{{ p.images.first.image.url }}" alt="IMG-PRODUCT">
 
-													<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ p.images.first.image.url }}">
-														<i class="fa fa-expand"></i>
-													</a>
-												</div>
-											</div>
-
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-md-6 col-lg-5 p-b-30">
-								<div class="p-r-50 p-t-5 p-lr-0-lg">
-									<h4 class="mtext-105 cl2 js-name-detail p-b-14">
-										{{ p.name }}
-									</h4>
-
-									<span class="mtext-106 cl2">
-										₦{{ p.price }}
-									</span>
-
-									<p class="stext-102 cl3 p-t-23">
-										{{ p.description }}
-									</p>
-									
-									<!--  -->
-									<div class="p-t-33">
-										
-
-										
-
-										<div class="flex-w flex-r-m p-b-10">
-											<div class="size-204 flex-w flex-m respon6-next">
-												<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-													<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-														<i class="fs-16 zmdi zmdi-minus"></i>
-													</div>
-
-													<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
-
-													<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-														<i class="fs-16 zmdi zmdi-plus"></i>
-													</div>
-												</div>
-
-												<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-													Add to cart
-												</button>
-											</div>
-										</div>	
-									</div>
-
-									<!--  -->
-									<div class="flex-w flex-m p-l-100 p-t-40 respon7">
-										<div class="flex-m bor9 p-r-10 m-r-11">
-											<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-												<i class="zmdi zmdi-favorite"></i>
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+												href="{{ p.images.first.image.url }}">
+												<i class="fa fa-expand"></i>
 											</a>
 										</div>
-
-										<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
-											<i class="fa fa-facebook"></i>
-										</a>
-
-										<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter">
-											<i class="fa fa-twitter"></i>
-										</a>
-
-										<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
-											<i class="fa fa-google-plus"></i>
-										</a>
 									</div>
+
 								</div>
 							</div>
 						</div>
-					{% endfor %}
+					</div>
+
+					<div class="col-md-6 col-lg-5 p-b-30">
+						<div class="p-r-50 p-t-5 p-lr-0-lg">
+							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+								{{ p.name }}
+							</h4>
+
+							<span class="mtext-106 cl2">
+								₦{{ p.price }}
+							</span>
+
+							<p class="stext-102 cl3 p-t-23">
+								{{ p.description }}
+							</p>
+
+							<!--  -->
+							<div class="p-t-33">
+
+
+
+
+								<div class="flex-w flex-r-m p-b-10">
+									<div class="size-204 flex-w flex-m respon6-next">
+										<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</div>
+
+											<input class="mtext-104 cl3 txt-center num-product" type="number"
+												name="num-product" value="1">
+
+											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-plus"></i>
+											</div>
+										</div>
+
+										<button
+											class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+											Add to cart
+										</button>
+									</div>
+								</div>
+							</div>
+
+							<!--  -->
+							<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+								<div class="flex-m bor9 p-r-10 m-r-11">
+									<a href="#"
+										class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
+										data-tooltip="Add to Wishlist">
+										<i class="zmdi zmdi-favorite"></i>
+									</a>
+								</div>
+
+								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+									data-tooltip="Facebook">
+									<i class="fa fa-facebook"></i>
+								</a>
+
+								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+									data-tooltip="Twitter">
+									<i class="fa fa-twitter"></i>
+								</a>
+
+								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+									data-tooltip="Google Plus">
+									<i class="fa fa-google-plus"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
 				{% endif %}
 			</div>
 		</div>
 	</div>
 
-<!--===============================================================================================-->	
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/animsition/js/animsition.min.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/bootstrap/js/popper.js' %}"></script>
 	<script src="{% static 'frontend/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/select2/select2.min.js' %}"></script>
 	<script>
-		$(".js-select2").each(function(){
+		$(".js-select2").each(function () {
 			$(this).select2({
 				minimumResultsForSearch: 20,
 				dropdownParent: $(this).next('.dropDownSelect2')
 			});
 		})
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/daterangepicker/moment.min.js' %}"></script>
 	<script src="{% static 'frontend/vendor/daterangepicker/daterangepicker.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/slick/slick.min.js' %}"></script>
 	<script src="{% static 'frontend/js/slick-custom.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/parallax100/parallax100.js' %}"></script>
 	<script>
-        $('.parallax100').parallax100();
+		$('.parallax100').parallax100();
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
 	<script>
-		$('.gallery-lb').each(function() { // the containers for all your galleries
+		$('.gallery-lb').each(function () { // the containers for all your galleries
 			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
+				delegate: 'a', // the selector for gallery item
+				type: 'image',
+				gallery: {
+					enabled: true
+				},
+				mainClass: 'mfp-fade'
+			});
 		});
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/isotope/isotope.pkgd.min.js' %}"></script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/sweetalert/sweetalert.min.js' %}"></script>
 	<script>
-		$('.js-addwish-b2').on('click', function(e){
+		$('.js-addwish-b2').on('click', function (e) {
 			e.preventDefault();
 		});
 
-		$('.js-addwish-b2').each(function(){
+		$('.js-addwish-b2').each(function () {
 			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
+			$(this).on('click', function () {
 				swal(nameProduct, "is added to wishlist !", "success");
 
 				$(this).addClass('js-addedwish-b2');
@@ -739,10 +778,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NOMAD
 			});
 		});
 
-		$('.js-addwish-detail').each(function(){
+		$('.js-addwish-detail').each(function () {
 			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
 
-			$(this).on('click', function(){
+			$(this).on('click', function () {
 				swal(nameProduct, "is added to wishlist !", "success");
 
 				$(this).addClass('js-addedwish-detail');
@@ -752,33 +791,34 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> NOMAD
 
 		/*---------------------------------------------*/
 
-		$('.js-addcart-detail').each(function(){
+		$('.js-addcart-detail').each(function () {
 			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
+			$(this).on('click', function () {
 				swal(nameProduct, "is added to cart !", "success");
 			});
 		});
-	
+
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
 	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
 			var ps = new PerfectScrollbar(this, {
 				wheelSpeed: 1,
 				scrollingThreshold: 1000,
 				wheelPropagation: false,
 			});
 
-			$(window).on('resize', function(){
+			$(window).on('resize', function () {
 				ps.update();
 			})
 		});
 	</script>
-<!--===============================================================================================-->
+	<!--===============================================================================================-->
 	<script src="{% static 'frontend/js/main.js' %}"></script>
 
 </body>
+
 </html>

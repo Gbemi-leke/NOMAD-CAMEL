@@ -20,5 +20,9 @@ urlpatterns = [
     path('account', views.account, name='account'),
     path('edit-account/<int:pk>/', views.edit_account, name='edit_account'),
     path('account-change-password', views.change_password, name='change_password'),
+    path('account/delete/', views.delete_account, name='delete-account'),
+    path('my-wishlist', views.wishlist_view, name='wish'),
+    path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+
 
 ]

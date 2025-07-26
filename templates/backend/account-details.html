@@ -3,115 +3,107 @@
 <!DOCTYPE html>
 
 {% block title %}
-    NOMAD-CAMEL
+NOMAD-CAMEL
 {% endblock %}
 
-{% block content %}	
+{% block content %}
 
 
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
+<!-- Content wrapper -->
+<div class="content-wrapper">
+  <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account Settings /</span> Account</h4>
 
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
+          </li>
+
+          </li>
+
+        </ul>
+        <div class="card mb-4">
+          <h5 class="card-header">Profile Details</h5>
+          <!-- Account -->
+          <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+              <img src="{{ user.profile.profile_photo.url }}" alt="user-avatar" class="d-block rounded" height="100"
+                width="100" id="uploadedAvatar" />
+
+            </div>
+          </div>
+          <hr class="my-0" />
+          <div class="card-body">
+            <form id="formAccountSettings" method="POST" onsubmit="return false">
               <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
-                    </li>
-                    
-                    </li>
-                   
-                  </ul>
-                  <div class="card mb-4">
-                    <h5 class="card-header">Profile Details</h5>
-                    <!-- Account -->
-                    <div class="card-body">
-                      <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="{{ user.profile.profile_photo.url }}"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
-                   
-                      </div>
-                    </div>
-                    <hr class="my-0" />
-                    <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
-                        <div class="row">
-                          <div class="mb-3 col-md-6">
-                            <label for="firstName" class="form-label">First Name</label><br>
-                            <p style="font-size: 18px;">{{ user.first_name }}</p>
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <p style="font-size: 18px;">{{ user.last_name }}</p>
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="lastName" class="form-label">Username</label>
-                            <p style="font-size: 18px;">{{ user.username }}</p>
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">E-mail</label>
-                            <p style="font-size: 18px;">{{ user.email }}</p>
-                          </div>
-                          
-                          <div class="mb-3 col-md-6">
-                            <label class="form-label" for="phoneNumber">Phone Number</label>
-                            <div class="input-group input-group-merge">
-                              <span class="input-group-text">NG (+234)</span>
-                              <p style="font-size: 18px;">{{ user.profile.phone|default:"-" }}</p>
-                            </div>
-                          </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="address" class="form-label">Gender</label>
-                            <p style="font-size: 18px;">{{ user.profile.get_gender_display|default:"-" }}</p>
-                          </div>
-                         
-                         
-                        </div>
-                      </form>
-                    </div>
-                    <!-- /Account -->
-                  </div>
-                  <div class="card">
-                    <h5 class="card-header">Delete Account</h5>
-                    <div class="card-body">
-                      <div class="mb-3 col-12 mb-0">
-                        <div class="alert alert-warning">
-                          <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                          <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
-                        </div>
-                      </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
-                        <div class="form-check mb-3">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="accountActivation"
-                            id="accountActivation"
-                          />
-                          <label class="form-check-label" for="accountActivation"
-                            >I confirm my account deactivation</label
-                          >
-                        </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
-                      </form>
-                    </div>
+                <div class="mb-3 col-md-6">
+                  <label for="firstName" class="form-label">First Name</label><br>
+                  <p style="font-size: 18px;">{{ user.first_name }}</p>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <p style="font-size: 18px;">{{ user.last_name }}</p>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Username</label>
+                  <p style="font-size: 18px;">{{ user.username }}</p>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="email" class="form-label">E-mail</label>
+                  <p style="font-size: 18px;">{{ user.email }}</p>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label class="form-label" for="phoneNumber">Phone Number</label>
+                  <div class="input-group input-group-merge">
+                    <span class="input-group-text">NG (+234)</span>
+                    <p style="font-size: 18px;">{{ user.profile.phone|default:"-" }}</p>
                   </div>
                 </div>
+                <div class="mb-3 col-md-6">
+                  <label for="address" class="form-label">Gender</label>
+                  <p style="font-size: 18px;">{{ user.profile.get_gender_display|default:"-" }}</p>
+                </div>
+
+
+              </div>
+            </form>
+          </div>
+          <!-- /Account -->
+        </div>
+        <div class="card">
+          <h5 class="card-header">Delete Account</h5>
+          <div class="card-body">
+            <div class="mb-3 col-12 mb-0">
+              <div class="alert alert-warning">
+                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
+                <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
               </div>
             </div>
-            <!-- / Content -->
+            <form method="POST" action="{% url 'backend:delete-account' %}">
+              {% csrf_token %}
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation"
+                  required />
+                <label class="form-check-label" for="accountActivation">
+                  I confirm my account deactivation
+                </label>
+              </div>
+              <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
+            </form>
 
-            <div class="content-backdrop fade"></div>
           </div>
-          <!-- Content wrapper -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
 {% endblock %}
