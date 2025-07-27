@@ -1,0 +1,51 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block title %}My Wishlist{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Account /</span> Wishlist
+  </h4>
+
+  {% if wishlist_items %}
+      <div class="row">
+        {% for item in wishlist_items %}
+          <div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
+            <div class="block2">
+              <div class="block2-pic hov-img0">
+                <img src="{{ item.product.images.first.image.url }}" alt="IMG-PRODUCT" style="height: 300px; object-fit: cover;">
+              </div>
+
+              <div class="block2-txt flex-w flex-t p-t-14">
+                <div class="block2-txt-child1 flex-col-l">
+                  <a href="" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                    {{ item.product.name }}
+                  </a>
+
+                  <span class="stext-105 cl3">
+                    ₦{{ item.product.price }}
+                  </span>
+                </div>
+
+                <div class="block2-txt-child2 flex-r p-t-3">
+                  <form method="post" action="{% url 'backend:remove_from_wishlist' item.product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">
+                      <i class="menu-icon tf-icons bx bx-heart">Remove</i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info text-center">
+        Your wishlist is empty. Start shopping and add products you love!
+      </div>
+    {% endif %}
+</div>
+{% endblock %}

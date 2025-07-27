@@ -256,7 +256,7 @@ def add_user(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'User added successfully.')
-            return redirect('backend:user_list')
+            return redirect('backend:user-list')
     else:
         form = RegisterForm()
     return render(request, 'backend/add-user.html', {'form': form})
@@ -282,7 +282,7 @@ def delete_user(request, pk):
     if request.method == 'POST':
         user.delete()
         messages.success(request, 'User deleted successfully.')
-        return redirect('backend:user_list')
+        return redirect('backend:user-list')
     
 @login_required(login_url='/backend/login/')
 def view_orders(request):
@@ -325,3 +325,23 @@ def change_password(request):
     else:
         change_password = PasswordChangeForm(user=request.user)
     return render(request, 'backend/change-password.html', {'pass_key':change_password})
+
+
+@login_required(login_url='/backend/login/')
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)  
+        user.delete()    
+        return redirect('index')  
+    return redirect('backend:account')  
+
+@login_required
+def wishlist_view(request):
+    wishlist_items = Wishlist.objects.filter(user=request.user)
+    return render(request, 'backend/wishlist.html', {'wishlist_items': wishlist_items})
+
+@login_required
+def remove_from_wishlist(request, product_id):
+    Wishlist.objects.filter(user=request.user, product_id=product_id).delete()
+    return redirect('backend:wish')

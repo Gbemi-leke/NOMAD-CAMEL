@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from frontend.models import *
 
 class Profile(models.Model):
     GENDER_CHOICES = [
@@ -15,3 +16,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'product')
