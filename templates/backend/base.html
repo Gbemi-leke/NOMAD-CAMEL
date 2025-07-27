@@ -97,8 +97,9 @@
               <div data-i18n="Analytics">Wishlist</div>
             </a>
           </li>
-           {% if user.is_superuser %}
+          
           <!-- Layouts -->
+          {% if user.is_superuser %}
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
               <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -145,6 +146,7 @@
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Authentications</span>
             </li>
+            {% endif %}
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>

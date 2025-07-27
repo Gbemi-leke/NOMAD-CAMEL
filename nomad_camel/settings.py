@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'nomad_camel.middleware.DatabaseErrorMiddleware',
 ]
 
 ROOT_URLCONF = 'nomad_camel.urls'
