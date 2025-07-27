@@ -17,8 +17,10 @@ urlpatterns = [
     path('users/add/', views.add_user, name='add-user'),
     path('users/edit/<int:pk>/', views.edit_user, name='edit-user'),
     path('users/delete/<int:pk>/', views.delete_user, name='delete-user'),
+    path('view-orders', views.view_orders, name='view_orders'),
     path('account', views.account, name='account'),
     path('edit-account/<int:pk>/', views.edit_account, name='edit_account'),
+    path('delete-account/<int:pk>/', views.delete_account, name='delete_account'),
     path('account-change-password', views.change_password, name='change_password'),
 
 ]

@@ -20,9 +20,10 @@
                 <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
+                      <a class="nav-link active pt-2" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
                     </li>
-                    
+                    <l>
+                      <a class="nav-link pt-2" href="{% url 'backend:edit_account' user.pk  %}"><i class="bx bx-user me-1"></i> Edit Account</a>
                     </li>
                    
                   </ul>
@@ -66,7 +67,7 @@
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="phoneNumber">Phone Number</label>
                             <div class="input-group input-group-merge">
-                              <span class="input-group-text">NG (+234)</span>
+                              <!-- <span class="input-group-text">NG (+234)</span> -->
                               <p style="font-size: 18px;">{{ user.profile.phone|default:"-" }}</p>
                             </div>
                           </div>

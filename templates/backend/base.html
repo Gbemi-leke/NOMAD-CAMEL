@@ -135,6 +135,22 @@
                 
               </ul>
             </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Track Orders</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 'backend:view_orders' %}" class="menu-link">
+                    <div data-i18n="Without menu">View Orders</div>
+                  </a>
+                </li>
+               
+                
+              </ul>
+            </li>
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Authentications</span>
@@ -235,7 +251,7 @@
                     <li>
                       <a class="dropdown-item" href="{% url 'backend:edit_account' user.pk  %}">
                         <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
+                        <span class="align-middle">Update Profile</span>
                       </a>
                     </li>
                    
@@ -271,7 +287,7 @@
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{% static 'backend/assets/vendor/libs/jquery/jquery.js' %}"></script>
     <script src="{% static 'backend/assets/vendor/libs/popper/popper.js' %}"></script>
-    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'backend/assets/vendor/js/bootstrap.js' %}"></script>
     <script src="{% static 'backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
 
     <script src="{% static 'backend/assets/vendor/js/menu.js' %}"></script>

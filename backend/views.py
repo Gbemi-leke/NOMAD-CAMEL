@@ -284,6 +284,9 @@ def delete_user(request, pk):
         messages.success(request, 'User deleted successfully.')
         return redirect('backend:user_list')
     
+@login_required(login_url='/backend/login/')
+def view_orders(request):
+    return render(request, 'backend/view-orders.html')
 
 @login_required(login_url='/backend/login/')
 def account(request):
@@ -297,10 +300,18 @@ def edit_account(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'User updated successfully.')
-            return redirect('backend:account')
+            form = EditAccount(instance=user, user_id=user.pk)
     else:
         form = EditAccount(instance=user, user_id=user.pk)
     return render(request, 'backend/edit-account-details.html', {'form': form, 'user': user})
+
+@login_required(login_url='/backend/login/')
+def delete_account(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        user.delete()
+        messages.success(request, 'Account deleted successfully.')
+        return redirect('index')
 
 @login_required(login_url='/backend/login/')
 def change_password(request):
