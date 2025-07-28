@@ -6,6 +6,7 @@ from django.conf import settings
 from backend.forms import *
 from backend.models import *
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from frontend.models import *
@@ -14,7 +15,6 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import timedelta
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import update_session_auth_hash
 
