@@ -97,12 +97,12 @@ def register(request):
         form = RegisterForm()
     return render(request, 'backend/register.html', {'form': form})
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def logout_view(request):
     logout(request)
     return redirect('index')
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def dashboard(request):
     products = Product.objects.all()
     total_users = User.objects.count()
@@ -138,7 +138,7 @@ def dashboard(request):
     }
     return render(request, 'backend/index.html', context)
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def add_product(request):
     product = None
     if request.method == 'POST':
@@ -194,7 +194,7 @@ def add_product(request):
     }
     return render(request, 'backend/add-products.html', context)
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     try:
@@ -234,24 +234,24 @@ def edit_product(request, pk):
     }
     return render(request, 'backend/edit-products.html', context)
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     messages.success(request, 'Product deleted successfully.')
     return redirect('backend:product-list')
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'backend/view-product-list.html', {'products': products})
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def user_list(request):
     users = User.objects.all().order_by('username')
     return render(request, 'backend/view-user.html', {'users': users})
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def add_user(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST, request.FILES)
@@ -263,7 +263,7 @@ def add_user(request):
         form = RegisterForm()
     return render(request, 'backend/add-user.html', {'form': form})
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def edit_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -278,7 +278,7 @@ def edit_user(request, pk):
     return render(request, 'backend/edit-user.html', {'form': form, 'user': user})
 
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -286,15 +286,15 @@ def delete_user(request, pk):
         messages.success(request, 'User deleted successfully.')
         return redirect('backend:user-list')
     
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def view_orders(request):
     return render(request, 'backend/view-orders.html')
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def account(request):
     return render(request, 'backend/account-details.html')
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def edit_account(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -307,7 +307,7 @@ def edit_account(request, pk):
         form = EditAccount(instance=user, user_id=user.pk)
     return render(request, 'backend/edit-account-details.html', {'form': form, 'user': user})
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def delete_account(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -315,7 +315,7 @@ def delete_account(request, pk):
         messages.success(request, 'Account deleted successfully.')
         return redirect('index')
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def change_password(request):
     if request.method == 'POST':
         change_password = PasswordChangeForm(data=request.POST,
@@ -329,7 +329,7 @@ def change_password(request):
     return render(request, 'backend/change-password.html', {'pass_key':change_password})
 
 
-@login_required(login_url='/backend/login/')
+@login_required(login_url='/auth/login/')
 def delete_account(request):
     if request.method == 'POST':
         user = request.user
