@@ -25,6 +25,12 @@ urlpatterns = [
     path('account/delete/', views.delete_account, name='delete-account'),
     path('my-wishlist', views.wishlist_view, name='wish'),
     path('wishlist/remove/<int:product_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
+    path('add-to-cart/<int:product_id>/', views.add_to_cart, name='cart'),
+    path('cart/', views.cart_detail, name='cart-detail'),
+    path('cart/update/<int:product_id>/', views.update_cart, name='update_cart'),
+
+
+
 
 
 ]

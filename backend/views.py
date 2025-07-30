@@ -14,8 +14,9 @@ from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib import messages
-
 from django.contrib.auth import update_session_auth_hash
 
 
@@ -346,3 +347,47 @@ def wishlist_view(request):
 def remove_from_wishlist(request, product_id):
     Wishlist.objects.filter(user=request.user, product_id=product_id).delete()
     return redirect('backend:wish')
+
+
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    quantity = int(request.POST.get('quantity', 1))
+
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        cart[str(product_id)] += quantity
+    else:
+        cart[str(product_id)] = quantity
+
+    request.session['cart'] = cart
+    messages.success(request, f"{product.name} added to cart.")
+    return redirect(request.META.get('HTTP_REFERER', 'product_list'))
+
+
+def cart_detail(request):
+    cart = request.session.get('cart', {})
+    items = []
+    total = 0
+
+    for pid, qty in cart.items():
+        product = Product.objects.get(id=pid)
+        subtotal = product.price * qty
+        total += subtotal
+        items.append({'product': product, 'qty': qty, 'subtotal': subtotal})
+
+    return render(request, 'frontend/shopping-cart.html', {'items': items, 'total': total})
+
+
+
+@require_POST
+def update_cart(request, product_id):
+    action = request.POST.get('action')
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        if action == "increase":
+            cart[str(product_id)] += 1
+        elif action == "decrease":
+            cart[str(product_id)] = max(1, cart[str(product_id)] - 1)
+    request.session['cart'] = cart
+    return redirect('cart_detail')
