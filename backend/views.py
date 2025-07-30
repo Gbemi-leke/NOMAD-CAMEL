@@ -103,7 +103,7 @@ def logout_view(request):
 
 @login_required(login_url='/backend/login/')
 def dashboard(request):
-    
+    products = Product.objects.all()
     total_users = User.objects.count()
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
@@ -131,6 +131,7 @@ def dashboard(request):
         'weeks': weeks,
         'users_per_week': users_per_week,
         'product_names': product_names,
+        'products': products,
         'product_quantities': product_quantities,
         # 'recent_orders': recent_orders,  # 
     }

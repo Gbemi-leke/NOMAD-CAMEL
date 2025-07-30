@@ -57,14 +57,11 @@ NOMAD-CAMEL
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                      <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                      <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                      <a class="dropdown-item" href="javascript:void(0);">View</a>
                     </div>
                   </div>
                 </div>
-                <span class="fw-semibold d-block mb-1">Profit</span>
-                <h3 class="card-title mb-2">₦12,628</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+                <span class="fw-semibold d-block mb-1">Wishlist</span>
               </div>
             </div>
           </div>
@@ -73,8 +70,7 @@ NOMAD-CAMEL
               <div class="card-body">
                 <div class="card-title d-flex align-items-start justify-content-between">
                   <div class="avatar flex-shrink-0">
-                    <img src="{% static 'backend/assets/img/icons/unicons/wallet-info.png' %}" alt="Credit Card"
-                      class="rounded" />
+                    <i class="bx bx-cart"></i>
                   </div>
                   <div class="dropdown">
                     <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -82,69 +78,82 @@ NOMAD-CAMEL
                       <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                      <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                      <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                      <a class="dropdown-item" href="javascript:void(0);">View</a>
                     </div>
                   </div>
                 </div>
-                <span>Sales</span>
-                <h3 class="card-title text-nowrap mb-1">₦4,679</h3>
-                <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
+                <span>Cart</span>
+                
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Total Revenue -->
+      <!-- List All Product -->
       <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
         <div class="card">
           <div class="row row-bordered g-0">
-            <div class="col-md-8">
-              <h5 class="card-header m-0 me-2 pb-3">Total Revenue</h5>
-              <div id="totalRevenueChart" class="px-2"></div>
-            </div>
-            <div class="col-md-4">
-              <div class="card-body">
-                <div class="text-center">
-                  <div class="dropdown">
-                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="growthReportId"
-                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <script>document.write(new Date().getFullYear());</script>
-                    </button>
-                    <!-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="growthReportId">
-                                <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                                <a class="dropdown-item" href="javascript:void(0);">2019</a>
-                              </div> -->
-                  </div>
-                </div>
+            <div class="col-md-12">
+              <h5 class="card-header m-0 me-2 pb-3">List Of All Product</h5>
+              <div class="table-responsive text-nowrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th>Price</th>
+                      <th>Qty</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for product in products %}
+                    <tr>
+                      <td><strong>{{ product.name }}</strong></td>
+                      <td><img src="{{ product.images.first.image.url }}" width="50" height="50" /></td>
+                      <td>₦{{ product.price }}</td>
+                      <td>{{ product.quantity }}</td>
+                      <td>
+                        {% if product.is_active %}
+                        <span class="badge bg-label-success me-1">Active</span>
+                        {% else %}
+                        <span class="badge bg-label-warning me-1">Inactive</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <div class="dropdown">
+                          <button class="btn btn-sm p-0 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" href="{% url 'backend:edit-product' product.pk %}">
+                                <i class="bx bx-edit-alt me-1"></i> Edit
+                              </a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="{% url 'backend:delete-product' product.pk %}">
+                                <i class="bx bx-trash me-1"></i> Delete
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+    
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="5" class="text-center">No products found.</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                
+                </table>
               </div>
-              <div id="growthChart"></div>
-              <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
-
-              <div class="d-flex px-xxl-4 px-lg-2 p-4 gap-xxl-3 gap-lg-1 gap-3 justify-content-between">
-                <div class="d-flex">
-                  <div class="me-2">
-                    <span class="badge bg-label-primary p-2"><i class="bx bx-naira text-primary"></i></span>
-                  </div>
-                  <div class="d-flex flex-column">
-                    <small>
-                      <script>document.write(new Date().getFullYear());</script>
-                    </small>
-                    <!-- <h6 class="mb-0">₦32.5k</h6> -->
-                  </div>
-                </div>
-                <div class="d-flex">
-                  <div class="me-2">
-                    <span class="badge bg-label-info p-2"><i class="bx bx-wallet text-info"></i></span>
-                  </div>
-                  <div class="d-flex flex-column">
-                    <small>2021</small>
-                    <h6 class="mb-0">₦41.2k</h6>
-                  </div>
-                </div>
-              </div>
             </div>
+            
           </div>
         </div>
       </div>
@@ -168,7 +177,7 @@ NOMAD-CAMEL
           </div>
           <div class="card-body">
             <ul class="p-0 m-0">
-              <li class="d-flex mb-4 pb-1">
+              <!-- <li class="d-flex mb-4 pb-1">
                 <div class="avatar flex-shrink-0 me-3">
                   <img src="{% static 'backend/assets/img/icons/unicons/paypal.png' %}" alt="User" class="rounded" />
                 </div>
@@ -182,7 +191,7 @@ NOMAD-CAMEL
                     <span class="text-muted">USD</span>
                   </div>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
