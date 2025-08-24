@@ -356,14 +356,21 @@ def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
 
     if str(product_id) in cart:
-        cart[str(product_id)] += quantity
+        # If item already exists, update quantity
+        cart[str(product_id)]['quantity'] += quantity
+        cart[str(product_id)]['subtotal'] = cart[str(product_id)]['quantity'] * product.price
     else:
-        cart[str(product_id)] = quantity
+        # Add new item with quantity and subtotal
+        cart[str(product_id)] = {
+            'quantity': quantity,
+            'subtotal': product.price * quantity
+        }
 
+    # Save cart back to session
     request.session['cart'] = cart
+
     messages.success(request, f"{product.name} added to cart.")
     return redirect(request.META.get('HTTP_REFERER', 'product_list'))
-
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
@@ -376,7 +383,7 @@ def cart_detail(request):
         total += subtotal
         items.append({'product': product, 'qty': qty, 'subtotal': subtotal})
 
-    return render(request, 'frontend/shopping-cart.html', {'items': items, 'total': total})
+    return render(request, 'frontend/shoping-cart.html', {'items': items, 'total': total})
 
 
 

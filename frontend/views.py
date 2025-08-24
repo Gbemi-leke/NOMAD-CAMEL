@@ -30,8 +30,8 @@ def product(request):
 def contact(request):
     return render(request, 'frontend/contact.html')
 
-def cart(request):
-    return render(request, 'frontend/shoping-cart.html')
+# def cart(request):
+#     return render(request, 'frontend/shoping-cart.html')
 
 
 

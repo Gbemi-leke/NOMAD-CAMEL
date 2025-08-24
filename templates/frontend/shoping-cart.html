@@ -52,7 +52,7 @@ NOMAD-CAMEL
 								<td class="column-3">₦{{ item.product.price }}</td>
 								<td class="column-4">
 									<div class="wrap-num-product flex-w m-l-auto m-r-0">
-										<form method="post" action="{% url 'update_cart' item.product.id %}">
+										<form method="post" action="{% url 'backend:update_cart' item.product.id %}">
 											{% csrf_token %}
 											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 												<button type="submit" name="action" value="decrease"><i
