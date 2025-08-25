@@ -440,7 +440,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 /*---------------------------------------------*/
 .main-menu > li:hover > a {
   text-decoration: none;
-  color: #6c7ae0;
+  color: #1c6a2e;
 }
 
 .main-menu > li:hover > .sub-menu {
@@ -458,7 +458,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .sub-menu > li:hover > a {
-  color: #6c7ae0;
+  color: #1c6a2e;
   text-decoration: none;
 }
 
@@ -1988,7 +1988,7 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .block1-txt {
-  background-color: rgba(26, 110, 43, 0);
+  background-color: rgba(9, 74, 22, 0);
 }
 
 /*---------------------------------------------*/
@@ -2016,7 +2016,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .block1-txt:hover {
-  background-color: rgba(103,117,214,0.8);
+  background-color: rgba(19, 106, 34, 0.8);
 }
 
 .block1-txt:hover .block1-txt-child2 {
