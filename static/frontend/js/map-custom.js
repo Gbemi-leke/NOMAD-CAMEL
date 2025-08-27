@@ -13,7 +13,7 @@
             var map_zoom = selector_map.attr('data-zoom');
 
             if (img_pin == null) {
-                img_pin = 'images/icons/location.png';
+                img_pin = '/static/frontend/images/icons/location.png';
             }
             if (data_map_x == null || data_map_y == null) {
                 data_map_x = 40.007749;

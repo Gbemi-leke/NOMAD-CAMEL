@@ -88,7 +88,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li class="">
 								<a href="{% url 'index' %}">Home</a>
 							</li>
 
@@ -272,7 +272,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li class="">
 								<a href="{% url 'index' %}">Home</a>
 							</li>
 
@@ -500,19 +500,19 @@
 						</li>
 
 						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							<a href="tel:+2348168033333" class="stext-107 cl7 hov-cl1 trans-04">
 								Phone: 08168033333
 							</a>
 						</li>
 
 						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							<a href="mailto:nomadcamelngpb@gmail.com" class="stext-107 cl7 hov-cl1 trans-04">
 								Email: nomadcamelngpb@gmail.com
 							</a>
 						</li>
 
 						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							<a href="https://wa.me/2348168033333" class="stext-107 cl7 hov-cl1 trans-04">
 								whatsapp: 08168033333
 							</a>
 						</li>
@@ -527,19 +527,19 @@
 					<ul>
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
+								Warranty
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Returns
+								Terms & Conditions
 							</a>
 						</li>
 
 						<li class="p-b-10">
 							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Shipping
+								Privacy Policy
 							</a>
 						</li>
 
@@ -672,7 +672,15 @@
 											</a>
 										</div>
 									</div>
+									<div class="item-slick3" data-thumb="{{ p.images.first.image.url }}">
+										<div class="wrap-pic-w pos-relative">
+											<img src="{{ p.images.first.image.url }}" alt="IMG-PRODUCT">
 
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="images/product-detail-03.jpg">
+												<i class="fa fa-expand"></i>
+											</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -845,6 +853,10 @@
 			})
 		});
 	</script>
+	<script src="{% static 'frontend/vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
+	<!--===============================================================================================-->
+	<script src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.456831833851!2d3.397151875052475!3d6.590000493403686!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b92c0242ded3b%3A0xed9b692de8b842ad!2s60%20Agidi%20Rd%2C%20Ketu%2C%20Lagos%20105102%2C%20Lagos!5e0!3m2!1sen!2sng!4v1756152501940!5m2!1sen!2sng"></script>
+	<script src="{% static 'frontend/js/map-custom.js' %}"></script>
 	<!--===============================================================================================-->
 	<script src="{% static 'frontend/js/main.js' %}"></script>
 

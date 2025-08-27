@@ -48,7 +48,7 @@ def login_view(request):
                 request.session.set_expiry(None)  # default session expiry
             
             messages.success(request, f"Welcome back, {user.username}!")
-            return redirect('backend:dashboard') 
+            return redirect('index') 
         else:
             messages.error(request, "Invalid email/username or password.")
 
