@@ -83,19 +83,20 @@
           <!-- Django form -->
           <form id="formAuthentication" class="mb-3" method="POST">
             {% csrf_token %}
-            {% if form.errors %}
-              <div class="alert alert-danger">
-                {% for field in form %}
-                  {% for error in field.errors %}
-                    <p>{{ field.label }}: {{ error }}</p>
-                  {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                  <p>{{ error }}</p>
-                {% endfor %}
-              </div>
+            {% if request.resolver_match.url_name == 'register' %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p>{{ field.label }}: {{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% endif %}
-
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="username" class="form-label">Username</label>
@@ -167,7 +168,7 @@
 
           <p class="text-center">
             <span>Already have an account?</span>
-            <a href="{% url 'backend:login' %}"><span>Sign in instead</span></a>
+            <a href="{% url 'backend:login_view' %}"><span>Sign in instead</span></a>
           </p>
         </div>
       </div>

@@ -20,11 +20,7 @@ def index(request):
     hot_products = Product.objects.filter(hot=True)
     daily_deals = Product.objects.filter(daily_deal=True)
     
-    return render(request, 'frontend/index.html', {
-        'pro': all_products,
-        'hot': hot_products,
-        'deals': daily_deals,
-    })
+    return render(request, 'frontend/index.html', {'pro': all_products,'hot': hot_products,'deals': daily_deals,})
 def about(request):
     return render(request, 'frontend/about.html')
 

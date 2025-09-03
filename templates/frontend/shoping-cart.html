@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 {% block title %}
-NOMAD-CAMEL
+NOMAD-CAMEL - Cart
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@ NOMAD-CAMEL
 <!-- breadcrumb -->
 <div class="container pt-5">
 	<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-		<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+		<a href="{% url 'index' %}" class="stext-109 cl8 hov-cl1 trans-04">
 			Home
 			<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 		</a>
@@ -25,12 +25,19 @@ NOMAD-CAMEL
 
 
 <!-- Shoping Cart -->
-<form class="bg0 p-t-75 p-b-85">
-	<div class="container">
+<div class="bg0 p-t-75 p-b-85">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 				<div class="m-l-25 m-r--38 m-lr-0-xl">
 					<div class="wrap-table-shopping-cart">
+						{% if messages %}
+						{% for mess in messages %}
+						<div class="alert alert-{{ mess.tags }}">
+							{{ mess }}
+						</div>
+						{% endfor %}
+						{% endif %}
 						<table class="table-shopping-cart">
 							<tr class="table_head">
 								<th class="column-1">Product</th>
@@ -38,6 +45,7 @@ NOMAD-CAMEL
 								<th class="column-3">Price</th>
 								<th class="column-4">Quantity</th>
 								<th class="column-5">Total</th>
+
 							</tr>
 
 							{% if items %}
@@ -45,32 +53,43 @@ NOMAD-CAMEL
 							<tr class="table_row">
 								<td class="column-1">
 									<div class="how-itemcart1">
-										<img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+										<img src="{{ item.product.images.first.image.url }}"
+											alt="{{ item.product.name }}">
 									</div>
 								</td>
 								<td class="column-2">{{ item.product.name }}</td>
 								<td class="column-3">₦{{ item.product.price }}</td>
 								<td class="column-4">
-									<div class="wrap-num-product flex-w m-l-auto m-r-0">
-										<form method="post" action="{% url 'backend:update_cart' item.product.id %}">
-											{% csrf_token %}
-											<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-												<button type="submit" name="action" value="decrease"><i
-														class="fs-16 zmdi zmdi-minus"></i></button>
-											</div>
+									<form method="post" action="{% url 'backend:update_cart' item.product.id %}">
+										{% csrf_token %}
+
+										<div class="wrap-num-product flex-w m-l-auto m-r-0">
+											<button type="submit" name="action" value="decrease"
+												class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-minus"></i>
+											</button>
 
 											<input class="mtext-104 cl3 txt-center num-product" type="number"
-												name="quantity" value="{{ item.qty }}" min="1">
+												name="quantity" value="{{ item.quantity }}" min="1">
 
-											<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-												<button type="submit" name="action" value="increase"><i
-														class="fs-16 zmdi zmdi-plus"></i></button>
-											</div>
-										</form>
-									</div>
+											<button type="submit" name="action" value="increase"
+												class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+												<i class="fs-16 zmdi zmdi-plus"></i>
+											</button>
+										</div>
+
+										<!-- Main Update button -->
+										<button type="submit" name="action" value="update"
+											class="btn btn-success btn-sm mt-2">Update</button>
+
+										<!-- Remove button -->
+										<button type="submit" name="action" value="remove"
+											class="btn btn-danger btn-sm mt-2">Remove</button>
+									</form>
 								</td>
 								<td class="column-5">₦{{ item.subtotal }}</td>
 							</tr>
+
 							{% endfor %}
 							{% else %}
 							<tr>
@@ -110,18 +129,20 @@ NOMAD-CAMEL
 
 					</div>
 
-					<form method="post" action="">
-						{% csrf_token %}
+					<form action="{% url 'backend:checkout' %}" method="get">
 						<button type="submit"
-							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" 
+							{% if not cart_items %}disabled style="opacity: 0.5; cursor: not-allowed;" {% endif %}>
 							Proceed to Checkout
 						</button>
+
 					</form>
+
 
 				</div>
 			</div>
 		</div>
 	</div>
-</form>
+</div>
 
 {% endblock %}

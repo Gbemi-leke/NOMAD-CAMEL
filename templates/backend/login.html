@@ -93,9 +93,9 @@
 
               <form id="formAuthentication" class="mb-3" method="POST">
                  {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                  {{ message }}
+                {% for mess in messages %}
+                <div class="alert alert-{{ mess.tags }}">
+                  {{ mess }}
                 </div>
                 {% endfor %}
                 {% endif %}

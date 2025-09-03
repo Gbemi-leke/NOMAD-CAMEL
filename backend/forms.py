@@ -6,6 +6,7 @@ from django.core import validators
 from frontend.models import *
 from django.contrib.auth.forms import PasswordChangeForm
 
+
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=30,
@@ -182,24 +183,6 @@ class ProductImageForm(forms.Form):
     )
 
 
-
-class ProductSizeForm(forms.ModelForm):
-    class Meta:
-        model = ProductSize
-        fields = ['size', 'quantity']
-        widgets = {
-            'size': forms.Select(attrs={
-                'class': 'form-select'
-            }),
-            'quantity': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Quantity for this size'
-            }),
-        }
-
-from django import forms
-from django.contrib.auth.models import User
-from .models import Profile
 
 class EditUserForm(forms.ModelForm):
     first_name = forms.CharField(
