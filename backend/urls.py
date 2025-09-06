@@ -1,3 +1,4 @@
+from django.contrib.auth import views as auth_views
 from django.urls import path
 # from django.conf.urls import url 
 from backend import views
@@ -28,9 +29,25 @@ urlpatterns = [
     path('add-to-cart/<int:product_id>/', views.add_to_cart, name='cart'),
     path('cart/', views.cart_detail, name='cart_detail'),
     path('cart/update/<int:product_id>/', views.update_cart, name='update_cart'),
+    path('cart/remove/<int:product_id>/', views.remove_cart, name='remove_from_cart'),
+    path("checkout/", views.checkout_view, name="checkout"),
 
-
-
+    # Password reset
+    path("password-reset/", 
+         auth_views.PasswordResetView.as_view(template_name="backend/password-reset.html"),
+         name="password_reset"),
+    
+    path("password-reset/done/", 
+         auth_views.PasswordResetDoneView.as_view(template_name="backend/password-reset-done.html"),
+         name="password_reset_done"),
+    
+    path("reset/<uidb64>/<token>/", 
+         auth_views.PasswordResetConfirmView.as_view(template_name="backend/password-reset-confirm.html"),
+         name="password_reset_confirm"),
+    
+    path("reset/done/", 
+         auth_views.PasswordResetCompleteView.as_view(template_name="backend/password-reset-complete.html"),
+         name="password_reset_complete"),
 
 
 ]

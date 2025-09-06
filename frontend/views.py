@@ -6,6 +6,11 @@ from backend.models import*
 from django.http import JsonResponse
 from django.core import serializers
 from django.core.paginator import Paginator
+from django.core import mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+from django.contrib import messages
 
 
 # Create your views here.
@@ -15,11 +20,7 @@ def index(request):
     hot_products = Product.objects.filter(hot=True)
     daily_deals = Product.objects.filter(daily_deal=True)
     
-    return render(request, 'frontend/index.html', {
-        'pro': all_products,
-        'hot': hot_products,
-        'deals': daily_deals,
-    })
+    return render(request, 'frontend/index.html', {'pro': all_products,'hot': hot_products,'deals': daily_deals,})
 def about(request):
     return render(request, 'frontend/about.html')
 
@@ -27,8 +28,35 @@ def product(request):
     products = Product.objects.all()
     return render(request, 'frontend/product.html', {'pro': products})
 
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.contrib import messages
+from django.shortcuts import render
+
 def contact(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        message = request.POST.get('msg')  # match your form field name
+
+        subject = 'Contact Us - NOMAD CAMEL'
+        context = {
+            'email': email,
+            'message': message,
+        }
+        html_message = render_to_string('frontend/mail-template.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = 'NOMAD-CAMEL <nomadcamelngpb@gmail.com>'
+        recipient_list = [email]  
+
+        try:
+            send_mail(subject, plain_message, from_email, recipient_list, html_message=html_message)
+            messages.success(request, 'Email sent, you will receive a response shortly!')
+        except Exception as e:
+            messages.error(request, f'Mail not sent. Error: {str(e)}')
+
     return render(request, 'frontend/contact.html')
+
 
 # def cart(request):
 #     return render(request, 'frontend/shoping-cart.html')

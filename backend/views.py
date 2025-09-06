@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.timezone import now
 from django.conf import settings
 from backend.forms import *
+from django.http import HttpResponseBadRequest
 from backend.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -14,11 +15,9 @@ from django.forms import modelformset_factory
 from django.contrib.auth.models import User
 from django.db.models import Count
 from datetime import timedelta
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
-
+from decimal import Decimal
 
 
 
@@ -356,45 +355,108 @@ def add_to_cart(request, product_id):
     cart = request.session.get('cart', {})
 
     if str(product_id) in cart:
-        # If item already exists, update quantity
         cart[str(product_id)]['quantity'] += quantity
-        cart[str(product_id)]['subtotal'] = cart[str(product_id)]['quantity'] * product.price
+        cart[str(product_id)]['subtotal'] = float(
+            cart[str(product_id)]['quantity'] * product.price
+        )
     else:
-        # Add new item with quantity and subtotal
         cart[str(product_id)] = {
             'quantity': quantity,
-            'subtotal': product.price * quantity
+            'price': float(product.price),   # store price too
+            'subtotal': float(product.price * quantity),
         }
 
-    # Save cart back to session
     request.session['cart'] = cart
-
+    request.session.modified = True
     messages.success(request, f"{product.name} added to cart.")
     return redirect(request.META.get('HTTP_REFERER', 'product_list'))
+
 
 def cart_detail(request):
     cart = request.session.get('cart', {})
     items = []
     total = 0
 
-    for pid, qty in cart.items():
+    for pid, item in cart.items():
         product = Product.objects.get(id=pid)
-        subtotal = product.price * qty
+        subtotal = product.price * item['quantity']
         total += subtotal
-        items.append({'product': product, 'qty': qty, 'subtotal': subtotal})
+        items.append({
+            'product': product,
+            'quantity': item['quantity'],
+            'subtotal': subtotal,
+        })
 
     return render(request, 'frontend/shoping-cart.html', {'items': items, 'total': total})
 
 
-
-@require_POST
 def update_cart(request, product_id):
-    action = request.POST.get('action')
-    cart = request.session.get('cart', {})
-    if str(product_id) in cart:
+    if request.method == "POST":
+        action = request.POST.get("action")
+        quantity = request.POST.get("quantity")
+
+        # ensure cart exists in session
+        cart = request.session.get("cart", {})
+
+        # convert product_id to string (since session keys are strings)
+        pid = str(product_id)
+
+        if pid not in cart:
+            return HttpResponseBadRequest("Product not in cart")
+
+        # Handle actions
         if action == "increase":
-            cart[str(product_id)] += 1
+            cart[pid]["quantity"] += 1
+
         elif action == "decrease":
-            cart[str(product_id)] = max(1, cart[str(product_id)] - 1)
-    request.session['cart'] = cart
-    return redirect('cart_detail')
+            cart[pid]["quantity"] = max(1, cart[pid]["quantity"] - 1)
+
+        elif action == "update":
+            try:
+                new_qty = int(quantity)
+                if new_qty > 0:
+                    cart[pid]["quantity"] = new_qty
+            except ValueError:
+                pass
+
+        elif action == "remove":
+            cart.pop(pid, None)
+
+        # Save back to session
+        request.session["cart"] = cart
+        request.session.modified = True
+        messages.success(request, "Cart updated successfully!")
+        return redirect("backend:cart_detail")   # change "cart" to your cart page name
+    return HttpResponseBadRequest("Invalid request")
+
+def remove_cart(request, product_id):
+    cart = request.session.get('cart', {})
+
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+        request.session['cart'] = cart
+        request.session.modified = True
+        messages.success(request, "Item removed from cart.")
+    else:
+        messages.warning(request, "Item not found in cart.")
+
+    return redirect(request.META.get('HTTP_REFERER', 'cart_detail'))
+
+
+
+@login_required(login_url='backend:login_view')  # Redirect to login if not authenticated
+def checkout_view(request):
+   
+    cart = request.session.get('cart', {})
+
+    if not cart:
+        return redirect("backend:cart-details")  # redirect if cart is empty
+
+    # Calculate totals (example)
+    total = sum(item['price'] * item['quantity'] for item in cart.values())
+
+    context = {
+        'cart': cart,
+        'total': total,
+    }
+    return render(request, "frontend/checkout.html", context)

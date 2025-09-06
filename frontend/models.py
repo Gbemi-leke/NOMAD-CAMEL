@@ -20,19 +20,3 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"Image for {self.product.name}"
 
-class ProductSize(models.Model):
-    SIZE_CHOICES = (
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-    )
-    product = models.ForeignKey(Product, related_name='sizes', on_delete=models.CASCADE)
-    size = models.CharField(max_length=1, choices=SIZE_CHOICES)
-    quantity = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        unique_together = ('product', 'size')
-
-    def __str__(self):
-        return f"{self.product.name} - {self.get_size_display()}"
-    
