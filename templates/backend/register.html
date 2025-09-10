@@ -2,202 +2,223 @@
 <!DOCTYPE html>
 
 
-<html
-  lang="en"
-  class="light-style customizer-hide"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="{% static 'backend/assets/' %}"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
+  data-assets-path="{% static 'backend/assets/' %}" data-template="vertical-menu-template-free">
 
-    <title>
-      {% block title %}
-        NOMAD-CAMEL
-      {% endblock %}
-    </title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <meta name="description" content="" />
+  <title>
+    {% block title %}
+    NOMAD-CAMEL
+    {% endblock %}
+  </title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{% static 'frontend/images/icons/favicon.png' %}" />
+  <meta name="description" content="" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'frontend/images/icons/favicon.png' %}" />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{% static 'backend/assets/vendor/fonts/boxicons.css' %}" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{% static 'backend/assets/css/demo.css' %}" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="{% static 'backend/assets/vendor/fonts/boxicons.css' %}" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{% static 'backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/core.css' %}"
+    class="template-customizer-core-css" />
+  <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/theme-default.css' %}"
+    class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="{% static 'backend/assets/css/demo.css' %}" />
 
-    <!-- Page CSS -->
-    <!-- Page -->
-    <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/pages/page-auth.css' %}" />
-    <!-- Helpers -->
-    <script src="{% static 'backend/assets/vendor/js/helpers.js' %}"></script>
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="{% static 'backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{% static 'backend/assets/js/config.js' %}"></script>
-  </head>
+  <!-- Page CSS -->
+  <!-- Page -->
+  <link rel="stylesheet" href="{% static 'backend/assets/vendor/css/pages/page-auth.css' %}" />
+  <!-- Helpers -->
+  <script src="{% static 'backend/assets/vendor/js/helpers.js' %}"></script>
 
-  <body>
-    <!-- Content -->
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="{% static 'backend/assets/js/config.js' %}"></script>
+</head>
 
-   <div class="container-xxl">
-  <div class="authentication-wrapper authentication-basic container-p-y">
-    <div class="authentication-inner">
-      <!-- Register Card -->
-      <div class="card">
-        <div class="card-body">
-          <!-- Logo -->
-          <div class="app-brand justify-content-center">
-            <a href="{% url 'index' %}" class="app-brand-link gap-2">
-              <span class="app-brand-logo demo">
-                <img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO" style="width: 60px;">
-              </span>
-              <span class="app-brand-text text-body fw-bolder">NOMAD-CAMEL</span>
-            </a>
-          </div>
-          <!-- /Logo -->
-          <h4 class="mb-2">Adventure starts here 🚀</h4>
-          <p class="mb-4">Make your app management easy and fun!</p>
+<body>
+  <!-- Content -->
 
-          <!-- Django form -->
-          <form id="formAuthentication" class="mb-3" method="POST">
-            {% csrf_token %}
-            {% if request.resolver_match.url_name == 'register' %}
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <p>{{ field.label }}: {{ error }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                        {% for error in form.non_field_errors %}
-                            <p>{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endif %}
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" name="username" value="{{ form.username.value|default:'' }}" placeholder="Enter username" required>
-              </div>
-
-              <div class="mb-3 col-md-6">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" value="{{ form.email.value|default:'' }}" placeholder="Enter email" required>
-              </div>
+  <div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <!-- Register Card -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Logo -->
+            <div class="app-brand justify-content-center">
+              <a href="{% url 'index' %}" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                  <img src="{% static 'frontend/images/icons/logo-01.png' %}" alt="IMG-LOGO" style="width: 60px;">
+                </span>
+                <span class="app-brand-text text-body fw-bolder">NOMAD-CAMEL</span>
+              </a>
             </div>
+            <!-- /Logo -->
+            <h4 class="mb-2">Adventure starts here 🚀</h4>
+            <p class="mb-4">Make your app management easy and fun!</p>
 
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="first_name" class="form-label">First Name</label>
-                <input type="text" class="form-control" name="first_name" value="{{ form.first_name.value|default:'' }}" placeholder="Enter first name" required>
+            <!-- Django form -->
+            <form id="formAuthentication" class="mb-3" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              {% if request.resolver_match.url_name == 'register' %}
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                {% for field in form %}
+                {% for error in field.errors %}
+                <p>{{ field.label }}: {{ error }}</p>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
               </div>
+              {% endif %}
+              {% endif %}
 
-              <div class="mb-3 col-md-6">
-                <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" class="form-control" name="last_name" value="{{ form.last_name.value|default:'' }}" placeholder="Enter last name" required>
-              </div>
-            </div>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  {{ form.username.label_tag }}
+                  {{ form.username }}
+                  {% for error in form.username.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
 
-            <div class="row">
-              <div class="mb-3 col-md-6">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="text" class="form-control" name="phone" value="{{ form.phone.value|default:'' }}" placeholder="Enter phone number" required>
-              </div>
-
-              <div class="mb-3 col-md-6">
-                <label for="gender" class="form-label">Gender</label>
-                <select class="form-control" name="gender" required>
-                  <option value="">Select gender</option>
-                  <option value="Male" {% if form.gender.value == "Male" %}selected{% endif %}>Male</option>
-                  <option value="Female" {% if form.gender.value == "Female" %}selected{% endif %}>Female</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="mb-3 col-md-6 form-password-toggle">
-                <label class="form-label" for="password1">Password</label>
-                <div class="input-group input-group-merge">
-                  <input type="password" id="password1" class="form-control" name="password1" placeholder="Enter password" required />
-                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <div class="mb-3 col-md-6">
+                  {{ form.email.label_tag }}
+                  {{ form.email }}
+                  {% for error in form.email.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
                 </div>
               </div>
 
-              <div class="mb-3 col-md-6">
-                <label class="form-label" for="password2">Confirm Password</label>
-                <input type="password" class="form-control" name="password2" placeholder="Re-enter password" required />
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  {{ form.first_name.label_tag }}
+                  {{ form.first_name }}
+                  {% for error in form.first_name.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  {{ form.last_name.label_tag }}
+                  {{ form.last_name }}
+                  {% for error in form.last_name.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
               </div>
-            </div>
 
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="terms" required>
-              <label class="form-check-label" for="terms">
-                I agree to <a href="#">privacy policy & terms</a>
-              </label>
-            </div>
-             <div class="mb-3">
-              <label for="profile_photo" class="form-label">Profile Photo</label>
-              <input type="file" class="form-control" name="profile_photo" id="profile_photo" />
-            </div>
-            <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
-          </form>
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  {{ form.phone.label_tag }}
+                  {{ form.phone }}
+                  {% for error in form.phone.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  {{ form.gender.label_tag }}
+                  {{ form.gender }}
+                  {% for error in form.gender.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  {{ form.password1.label_tag }}
+                  {{ form.password1 }}
+                  {% for error in form.password1.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  {{ form.password2.label_tag }}
+                  {{ form.password2 }}
+                  {% for error in form.password2.errors %}
+                  <small class="text-danger">{{ error }}</small>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="mb-3">
+                {{ form.accept_terms }}
+                {{ form.accept_terms.label_tag }}
+                {% for error in form.accept_terms.errors %}
+                <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+              </div>
+
+              <div class="mb-3">
+                {{ form.profile_photo.label_tag }}
+                {{ form.profile_photo }}
+                {% for error in form.profile_photo.errors %}
+                <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+              </div>
+
+              <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
+            </form>
 
 
-          <p class="text-center">
-            <span>Already have an account?</span>
-            <a href="{% url 'backend:login_view' %}"><span>Sign in instead</span></a>
-          </p>
+
+            <p class="text-center">
+              <span>Already have an account?</span>
+              <a href="{% url 'backend:login_view' %}"><span>Sign in instead</span></a>
+            </p>
+          </div>
         </div>
+        <!-- /Register Card -->
       </div>
-      <!-- /Register Card -->
     </div>
   </div>
-</div>
 
 
-    <!-- / Content -->
+  <!-- / Content -->
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{% static 'backend/assets/vendor/libs/jquery/jquery.js' %}"></script>
-    <script src="{% static 'backend/assets/vendor/libs/popper/popper.js' %}"></script>
-    <script src="{% static 'backend/assets/vendor/js/bootstrap.js' %}"></script>
-    <script src="{% static 'backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="{% static 'backend/assets/vendor/libs/jquery/jquery.js' %}"></script>
+  <script src="{% static 'backend/assets/vendor/libs/popper/popper.js' %}"></script>
+  <script src="{% static 'backend/assets/vendor/js/bootstrap.js' %}"></script>
+  <script src="{% static 'backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
 
-    <script src="{% static 'backend/assets/vendor/js/menu.js' %}"></script>
-    <!-- endbuild -->
+  <script src="{% static 'backend/assets/vendor/js/menu.js' %}"></script>
+  <!-- endbuild -->
 
-    <!-- Vendors JS -->
+  <!-- Vendors JS -->
 
-    <!-- Main JS -->
-    <script src="{% static 'backend/assets/js/main.js' %}"></script>
+  <!-- Main JS -->
+  <script src="{% static 'backend/assets/js/main.js' %}"></script>
 
-    <!-- Page JS -->
+  <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
 </html>
