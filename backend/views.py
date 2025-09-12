@@ -143,14 +143,14 @@ def add_product(request):
     if request.method == 'POST':
         product_form = ProductForm(request.POST)
         image_form = ProductImageForm(request.POST, request.FILES)
-        size_form = ProductSizeForm(request.POST)
+        # size_form = ProductSizeForm(request.POST)
 
-        if product_form.is_valid() and image_form.is_valid() and size_form.is_valid():
+        if product_form.is_valid() and image_form.is_valid():
             product = product_form.save()
 
-            size = size_form.save(commit=False)
-            size.product = product
-            size.save()
+            # size = size_form.save(commit=False)
+            # size.product = product
+            # size.save()
 
             images = request.FILES.getlist('images')
             for img in images:
@@ -161,7 +161,7 @@ def add_product(request):
 
             # Re-initialize forms with the saved product for editing
             product_form = ProductForm(instance=product)
-            size_form = ProductSizeForm(instance=size)
+            # size_form = ProductSizeForm(instance=size)
             image_form = ProductImageForm()
             
             product_images = ProductImage.objects.filter(product=product)
@@ -169,7 +169,7 @@ def add_product(request):
             context = {
                 'product_form': product_form,
                 'image_form': image_form,
-                'size_form': size_form,
+                # 'size_form': size_form,
                 'context_action': 'Update Product',  
                 'product': product,
                 'product_images': product_images,
@@ -180,14 +180,14 @@ def add_product(request):
     else:
         product_form = ProductForm()
         image_form = ProductImageForm()
-        size_form = ProductSizeForm()
+        # size_form = ProductSizeForm()
         
         product_images = ProductImage.objects.filter(product=product)
 
     context = {
         'product_form': product_form,
         'image_form': image_form,
-        'size_form': size_form,
+        # 'size_form': size_form,
         'context_action': 'Add Product',
        
     }
