@@ -89,7 +89,7 @@ def register(request):
             email.send()
 
             messages.success(request, "Account created successfully! A welcome email has been sent.")
-            return redirect('backend:login')
+            return redirect('backend:login_view')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
