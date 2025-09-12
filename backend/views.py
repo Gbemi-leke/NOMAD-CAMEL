@@ -196,22 +196,19 @@ def add_product(request):
 @login_required(login_url='/auth/login/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    try:
-        size = ProductSize.objects.get(product=product)
-    except ProductSize.DoesNotExist:
-        size = None
+    
 
     if request.method == 'POST':
         product_form = ProductForm(request.POST, instance=product)
-        size_form = ProductSizeForm(request.POST, instance=size)
+        # size_form = ProductSizeForm(request.POST, instance=size)
         image_form = ProductImageForm(request.POST, request.FILES)  # for adding new images
 
-        if product_form.is_valid() and size_form.is_valid() and image_form.is_valid():
+        if product_form.is_valid() and image_form.is_valid():
             product = product_form.save()
 
-            size = size_form.save(commit=False)
-            size.product = product
-            size.save()
+            # size = size_form.save(commit=False)
+            # size.product = product
+            # size.save()
 
             # Add new images if uploaded
             images = request.FILES.getlist('images')
@@ -222,12 +219,12 @@ def edit_product(request, pk):
 
     else:
         product_form = ProductForm(instance=product)
-        size_form = ProductSizeForm(instance=size)
+        # size_form = ProductSizeForm(instance=size)
         image_form = ProductImageForm()
 
     context = {
         'product_form': product_form,
-        'size_form': size_form,
+        # 'size_form': size_form,
         'image_form': image_form,
         'product': product,
     }
@@ -238,7 +235,7 @@ def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     messages.success(request, 'Product deleted successfully.')
-    return redirect('backend:product-list')
+    return redirect('backend:product_list')
 
 @login_required(login_url='/auth/login/')
 def product_list(request):
