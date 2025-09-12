@@ -460,3 +460,5 @@ def checkout_view(request):
         'total': total,
     }
     return render(request, "frontend/checkout.html", context)
+
+
