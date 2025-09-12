@@ -450,7 +450,7 @@ def checkout_view(request):
     cart = request.session.get('cart', {})
 
     if not cart:
-        return redirect("backend:cart-details")  # redirect if cart is empty
+        return redirect("backend:cart_detail")  # redirect if cart is empty
 
     # Calculate totals (example)
     total = sum(item['price'] * item['quantity'] for item in cart.values())
@@ -460,5 +460,6 @@ def checkout_view(request):
         'total': total,
     }
     return render(request, "frontend/checkout.html", context)
+
 
 
