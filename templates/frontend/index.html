@@ -115,137 +115,91 @@ NOMAD-CAMEL
 
 <!-- Product -->
 <section class="bg0 p-t-23 p-b-140">
-	<div class="container">
-		<div class="p-b-10">
-			<h3 class="ltext-103 cl5">
-				Product Overview
-			</h3>
-		</div>
+  <div class="container">
+    <div class="p-b-10">
+      <h3 class="ltext-103 cl5">
+        Product Overview
+      </h3>
+    </div>
 
-		<div class="flex-w flex-sb-m p-b-52">
-			<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-					All Products
-				</button>
+    <div class="flex-w flex-sb-m p-b-52">
+      <!-- Filter Buttons -->
+      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">All Products</button>
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">Hot & New</button>
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">Daily Deal</button>
+      </div>
 
-				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-					Hot & New
-				</button>
+      <!-- Search -->
+      <div class="flex-w flex-c-m m-tb-10">
+        <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+          <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+          <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+          Search
+        </div>
+      </div>
 
-				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-					Daily Deal
-				</button>
+      <!-- Search Panel -->
+      <div class="dis-none panel-search w-full p-t-10 p-b-15">
+        <div class="bor8 dis-flex p-l-15">
+          <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+            <i class="zmdi zmdi-search"></i>
+          </button>
+          <input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+        </div>
+      </div>
+    </div>
 
-			</div>
+    <!-- PRODUCTS GRID -->
+    <div class="row isotope-grid">
+      {% if pro %}
+        {% for p in pro %}
+          <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+            <div class="block2">
+              <div class="block2-pic hov-img0" style="height: 310px;">
+                <img src="{{ p.images.first.image.url }}" alt="IMG-PRODUCT" style="width: 100%; height: 100%; object-fit: cover;">
 
-			<div class="flex-w flex-c-m m-tb-10">
+                <a href="{% url 'frontend:product_details' p.id %}"
+                  class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                  Quick View
+                </a>
+              </div>
 
-				<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-					<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-					<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-					Search
-				</div>
-			</div>
+              <div class="block2-txt flex-w flex-t p-t-14">
+                <div class="block2-txt-child1 flex-col-l">
+                  <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                    {{ p.name }}
+                  </a>
 
-			<!-- Search product -->
-			<div class="dis-none panel-search w-full p-t-10 p-b-15">
-				<div class="bor8 dis-flex p-l-15">
-					<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
+                  <span class="stext-105 cl3">₦{{ p.price }}</span>
+                </div>
 
-					<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
-						placeholder="Search">
-				</div>
-			</div>
-		</div>
+                <div class="block2-txt-child2 flex-r p-t-3">
+                  <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" data-id="{{ p.id }}">
+                    <img class="icon-heart1 dis-block trans-04"
+                        src="{% static 'frontend/images/icons/icon-heart-01.png' %}" alt="ICON">
+                    <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                        src="{% static 'frontend/images/icons/icon-heart-02.png' %}" alt="ICON">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-info text-center">No products available at the moment.</div>
+      {% endif %}
+    </div>
 
-		<div class="row isotope-grid">
-			<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-				<!-- Block2 -->
-				{% if pro %}
-				{% for p in pro %}
-				<div class="block2">
-					<div class="block2-pic hov-img0" style="width: auto; height: 400px;">
-						<img src="{{ p.images.first.image.url }}" alt="IMG-PRODUCT" style="width: 100%; height: 310px;">
-
-						<a href="#"
-							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-							Quick View
-						</a>
-					</div>
-
-					<div class="block2-txt flex-w flex-t p-t-14">
-						<div class="block2-txt-child1 flex-col-l ">
-							<a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-								{{ p.name }}
-							</a>
-
-							<span class="stext-105 cl3">
-								₦{{ p.price }}
-							</span>
-						</div>
-
-						<div class="block2-txt-child2 flex-r p-t-3">
-							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
-								data-id="{{ p.id }}">
-								<img class="icon-heart1 dis-block trans-04"
-										src="{% static 'frontend/images/icons/icon-heart-01.png' %}" alt="ICON">
-								<img class="icon-heart2 dis-block trans-04 ab-t-l"
-										src="{% static 'frontend/images/icons/icon-heart-02.png' %}" alt="ICON">
-							</a>
-
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-				{% endif %}
-			</div>
-
-
-		</div>
-
-		<!-- Load more -->
-		<div class="flex-c-m flex-w w-full p-t-45">
-			<a href="#" id="load-more-btn" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-				Load More
-			</a>
-		</div>
-
-		<script>
-			let currentPage = 2; // First page is already loaded
-			const loadMoreBtn = document.getElementById('load-more-btn');
-
-			loadMoreBtn.addEventListener('click', function (e) {
-				e.preventDefault();
-
-				fetch(`/load-more-products/?page=${currentPage}`)
-					.then(response => response.json())
-					.then(data => {
-						if (data.products.length > 0) {
-							data.products.forEach(p => {
-								const div = document.createElement('div');
-								div.className = 'product';
-								div.innerHTML = `
-              <img src="${p.image_url}" alt="${p.name}">
-              <p>${p.name}</p>
-              <p>$${p.price}</p>
-            `;
-								document.getElementById('product-list').appendChild(div);
-							});
-
-							currentPage += 1;
-							if (!data.has_next) {
-								loadMoreBtn.style.display = 'none';
-							}
-						} else {
-							loadMoreBtn.style.display = 'none';
-						}
-					});
-			});
-		</script>
-	</div>
+    <!-- Load More Button -->
+    <div class="flex-c-m flex-w w-full p-t-45">
+      <a href="{% url 'frontend:product' %}" id="load-more-btn" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+        Load More
+      </a>
+    </div>
+  </div>
 </section>
+
 <script>
 	// Wait for DOM content to load
 	document.addEventListener("DOMContentLoaded", function () {

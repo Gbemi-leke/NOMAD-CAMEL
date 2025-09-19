@@ -7,6 +7,7 @@ app_name = 'frontend'
 urlpatterns = [
     path('', views.about, name='about'),
     path('product', views.product, name='product'),
+    path('gadgets_detail/<int:product_id>/', views.product_details, name='product_details'),
     path('contact', views.contact, name='contact'),
     # path('cart', views.cart, name='cart'),
     path('wishlist/toggle/<int:product_id>/', views.toggle_wishlist, name='toggle-wishlist'),

@@ -16,7 +16,7 @@ from django.contrib import messages
 # Create your views here.
 
 def index(request):
-    all_products = Product.objects.all()
+    all_products = Product.objects.order_by('-created_at')
     hot_products = Product.objects.filter(hot=True)
     daily_deals = Product.objects.filter(daily_deal=True)
     
@@ -27,6 +27,11 @@ def about(request):
 def product(request):
     products = Product.objects.all()
     return render(request, 'frontend/product.html', {'pro': products})
+
+
+def product_details(request, product_id):
+    product_detail =Product.objects.get(id=product_id)
+    return render(request, 'frontend/product-detail.html', {'det':product_detail})
 
 
 def contact(request):
