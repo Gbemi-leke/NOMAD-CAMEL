@@ -3,69 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <title>Welcome to NOMAD-CAMEL</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f8f9fa;
-      padding: 30px;
-      color: #343a40;
-    }
-    .email-container {
-      background-color: #ffffff;
-      border-radius: 8px;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .logo {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .logo img {
-      width: 60px;
-    }
-    .title {
-      text-align: center;
-      color: #00b894;
-      font-size: 24px;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      background-color: #00b894;
-      color: #ffffff;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 6px;
-    }
-    .footer {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 13px;
-      color: #aaa;
-    }
-  </style>
 </head>
-<body>
-  <div class="email-container">
-    <div class="logo">
-      <img src="https://yourdomain.com/static/frontend/images/icons/logo-01.png" alt="NOMAD-CAMEL Logo">
-    </div>
-    <div class="title">Welcome, {{ user.username }}! ⚡</div>
-    <p>Hello {{ user.username }},</p>
-    <p>Thanks for registering at <strong>NOMAD-CAMEL</strong>, your go-to store for premium power banks and adventure tech!</p>
-    <p>You can now log in and explore all our charging solutions made for fast, reliable energy on the move.</p>
-    
-    <div style="text-align: center;">
-      <a href="http://127.0.0.1:8000/" class="button">Visit Our Shop</a>
-    </div>
+<body style="margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; background-color:#f4f4f4;">
 
-    <p style="margin-top: 30px;">Stay charged,<br><strong>NOMAD-CAMEL Team 🐪⚡</strong></p>
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4; padding:30px 0;">
+    <tr>
+      <td align="center">
 
-    <div class="footer">
-      &copy; {{ year }} NOMAD-CAMEL. All rights reserved.
-    </div>
-  </div>
+        <!-- Email Container -->
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="center" style="background:#00b894; color:#ffffff; padding:20px 30px;">
+              <img src="https://nomadcamel.ng/static/frontend/images/icons/logo-01.png" alt="NOMAD-CAMEL" style="width:auto; height:100px; display:block; margin:auto;">
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:30px; color:#333333; font-size:16px; line-height:1.6;">
+              <h2 style="text-align:center; color:#00b894;">Welcome, {{ user.username }}! ⚡</h2>
+
+              <p>Hi <strong>{{ user.username }}</strong>,</p>
+
+              <p>Thank you for joining <strong>NOMAD-CAMEL</strong>, your go-to destination for premium power banks and rugged adventure tech!</p>
+
+              <p>Your account has been successfully created. You can now log in and explore our collection of fast-charging, reliable gear made for life on the move.</p>
+
+              <!-- CTA Button -->
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-top: 25px;">
+                <tr>
+                  <td align="center">
+                    <a href="https://nomadcamel.ng" style="background-color:#00b894; color:#ffffff; text-decoration:none; padding:12px 24px; border-radius:6px; display:inline-block; font-weight:bold;">
+                      Visit Our Shop
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top:30px;">Stay charged,<br>
+              <strong style="color:#00b894;">The NOMAD-CAMEL🐪</strong></p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="background:#f0f0f0; color:#666666; font-size:13px; padding:15px 20px;">
+              &copy; {{ year }} NOMAD-CAMEL. All rights reserved. <br>
+              This is an automated email. Please do not reply directly.
+            </td>
+          </tr>
+        </table>
+        <!-- End Email Container -->
+
+      </td>
+    </tr>
+  </table>
+
 </body>
 </html>
