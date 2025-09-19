@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.timezone import now
 from django.conf import settings
 from backend.forms import *
+from django.http import JsonResponse
 from django.http import HttpResponseBadRequest
 from backend.models import *
 from django.contrib.auth import authenticate, login, logout
@@ -303,12 +304,16 @@ def edit_account(request, pk):
     return render(request, 'backend/edit-account-details.html', {'form': form, 'user': user})
 
 @login_required(login_url='/auth/login/')
-def delete_account(request, pk):
-    user = get_object_or_404(User, pk=pk)
+def delete_account(request):
     if request.method == 'POST':
-        user.delete()
+        request.user.delete()
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            return JsonResponse({"status": "ok", "message": "Account deleted successfully."})
         messages.success(request, 'Account deleted successfully.')
         return redirect('index')
+
+    return JsonResponse({"status": "error", "message": "Invalid request."}, status=400)
+
 
 @login_required(login_url='/auth/login/')
 def change_password(request):
