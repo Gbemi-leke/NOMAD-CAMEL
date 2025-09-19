@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
@@ -9,7 +10,6 @@ from django.core.paginator import Paginator
 from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-
 from django.contrib import messages
 
 
@@ -28,11 +28,6 @@ def product(request):
     products = Product.objects.all()
     return render(request, 'frontend/product.html', {'pro': products})
 
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-from django.contrib import messages
-from django.shortcuts import render
 
 def contact(request):
     if request.method == 'POST':
@@ -56,13 +51,6 @@ def contact(request):
             messages.error(request, f'Mail not sent. Error: {str(e)}')
 
     return render(request, 'frontend/contact.html')
-
-
-# def cart(request):
-#     return render(request, 'frontend/shoping-cart.html')
-
-
-
 
 
 def toggle_wishlist(request, product_id):

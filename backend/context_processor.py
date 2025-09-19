@@ -1,4 +1,5 @@
 from frontend.models import *
+from backend.models import *
 
 
 def cart_item_count(request):
@@ -27,3 +28,11 @@ def cart_item_count(request):
         'cart_items': cart_items,
         'cart_total': grand_total,   
     }
+
+
+def wishlist_count(request):
+    if request.user.is_authenticated:
+        return {
+            "wishlist_count": Wishlist.objects.filter(user=request.user).count()
+        }
+    return {"wishlist_count": 0}
