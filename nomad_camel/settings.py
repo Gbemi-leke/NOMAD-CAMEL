@@ -11,23 +11,15 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 TEMPLATES_DIR = BASE_DIR / 'templates'
-
 STATIC_DIR = BASE_DIR / 'static'
-STATICFILES_DIRS = [STATIC_DIR]
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-MEDIA_URL = '/media/'
+STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = BASE_DIR / 'media'
-
+MEDIA_URL = '/media/'
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
@@ -43,28 +35,9 @@ MESSAGE_TAGS = {
 SECRET_KEY = 'django-insecure-@gnuv7d+8#-@8h_l$11=44iuyr5j9cs)(gzm=k+84gt2kse-x$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'errors.log',
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
-
 DEBUG = True
 
-ALLOWED_HOSTS = ['nomadcamel.ng', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://nomadcamel.ng','localhost', '127.0.0.1', ]
 
 
 # Application definition

@@ -70,23 +70,7 @@ Add Product
 
                 <hr>
 
-                <!-- Product Sizes -->
-                <h5>Product Sizes</h5>
-                <div id="sizes-container">
-                  <!-- Initially render one size form -->
-                  <div class="row mb-3 size-form">
-                    <div class="col-md-4">
-                      {{ size_form.quantity.label_tag }}
-                      {{ size_form.quantity }}
-                    </div>
-                    <div class="col-md-2 d-flex align-items-end pt-3">
-                      <button type="button" class="btn btn-danger remove-size">X</button>
-                    </div>
-                  </div>
-                </div>
-
-                <button type="button" class="btn btn-info mb-3" id="add-size">Add Size</button> <br>
-
+            
                 <button type="submit" class="btn btn-primary">{{ context_action|default:"Add Product" }}</button>
               </form>
 
