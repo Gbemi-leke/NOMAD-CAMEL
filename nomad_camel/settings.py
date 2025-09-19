@@ -37,7 +37,7 @@ SECRET_KEY = 'django-insecure-@gnuv7d+8#-@8h_l$11=44iuyr5j9cs)(gzm=k+84gt2kse-x$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nomadcamel.ng','localhost', '127.0.0.1', ]
+ALLOWED_HOSTS = ['nomadcamel.ng','localhost', '127.0.0.1']
 
 
 # Application definition
