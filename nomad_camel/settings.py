@@ -35,9 +35,28 @@ MESSAGE_TAGS = {
 SECRET_KEY = 'django-insecure-@gnuv7d+8#-@8h_l$11=44iuyr5j9cs)(gzm=k+84gt2kse-x$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
 
-ALLOWED_HOSTS = []
+DEBUG = False
+
+ALLOWED_HOSTS = ['nomadcamel.ng', 'localhost', '127.0.0.1']
 
 
 # Application definition

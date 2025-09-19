@@ -28,6 +28,9 @@ urlpatterns = [
     path('auth/', include('backend.urls')),
     path('admin/', admin.site.urls),
 ]
+# nomad_camel/urls.py
+
+handler404 = 'nomad_camel.views.custom_404_view'
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)

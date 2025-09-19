@@ -277,10 +277,9 @@ def edit_user(request, pk):
 @login_required(login_url='/auth/login/')
 def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
-    if request.method == 'POST':
-        user.delete()
-        messages.success(request, 'User deleted successfully.')
-        return redirect('backend:user-list')
+    user.delete()
+    messages.success(request, 'User deleted successfully.')
+    return redirect('backend:user-list')
     
 @login_required(login_url='/auth/login/')
 def view_orders(request):
