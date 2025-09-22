@@ -30,7 +30,8 @@ urlpatterns = [
     path('cart/', views.cart_detail, name='cart_detail'),
     path('cart/update/<int:product_id>/', views.update_cart, name='update_cart'),
     path('cart/remove/<int:product_id>/', views.remove_cart, name='remove_from_cart'),
-    path("checkout/", views.checkout_view, name="checkout"),
+    path("checkout/", views.checkout, name="checkout"),
+    path("checkout/process/", views.process_checkout, name="process_checkout"),
 
     # Password reset
     path("password-reset/", 

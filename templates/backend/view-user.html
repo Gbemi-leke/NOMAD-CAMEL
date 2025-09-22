@@ -39,12 +39,11 @@
                   <td>{{ user.profile.phone|default:"-" }}</td>
                   <td>{{ user.profile.get_gender_display|default:"-" }}</td>
                   <td>
-                    {% if user.profile.profile_photo %}
-                    <img src="{{ user.profile.profile_photo.url }}" alt="Profile photo" class="rounded-circle" width="40"
+                  
+                    <img src="{{ user.profile.photo_url }}" alt="Profile photo" class="rounded-circle" width="40"
                       height="40">
-                    {% else %}
-                    <span class="text-muted">No photo</span>
-                    {% endif %}
+                   
+                   
                   </td>
                   <td>
                     {% if user.is_active %}

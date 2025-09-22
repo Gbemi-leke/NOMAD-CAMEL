@@ -21,7 +21,6 @@ from django.contrib.auth import update_session_auth_hash
 from decimal import Decimal
 
 
-
 def login_view(request):
     if request.method == "POST":
         identifier = request.POST.get("email-username")  # email or username input
@@ -354,23 +353,26 @@ def add_to_cart(request, product_id):
     quantity = int(request.POST.get('quantity', 1))
 
     cart = request.session.get('cart', {})
+    pid = str(product_id)
 
-    if str(product_id) in cart:
-        cart[str(product_id)]['quantity'] += quantity
-        cart[str(product_id)]['subtotal'] = float(
-            cart[str(product_id)]['quantity'] * product.price
-        )
+    if pid in cart:
+        cart[pid]['quantity'] += quantity
+        cart[pid]['subtotal'] = float(cart[pid]['quantity'] * product.price)
+        cart[pid]['name'] = product.name  # 👈 ensure name is always there
+        cart[pid]['price'] = float(product.price)  # 👈 refresh in case price changed
     else:
-        cart[str(product_id)] = {
-            'quantity': quantity,
-            'price': float(product.price),   # store price too
-            'subtotal': float(product.price * quantity),
+        cart[pid] = {
+            "name": product.name,
+            "quantity": quantity,
+            "price": float(product.price),
+            "subtotal": float(product.price * quantity),
         }
 
     request.session['cart'] = cart
     request.session.modified = True
     messages.success(request, f"{product.name} added to cart.")
     return redirect(request.META.get('HTTP_REFERER', 'product_list'))
+
 
 
 def cart_detail(request):
@@ -383,6 +385,7 @@ def cart_detail(request):
         subtotal = product.price * item['quantity']
         total += subtotal
         items.append({
+            
             'product': product,
             'quantity': item['quantity'],
             'subtotal': subtotal,
@@ -444,23 +447,64 @@ def remove_cart(request, product_id):
     return redirect(request.META.get('HTTP_REFERER', 'cart_detail'))
 
 
+@login_required(login_url='backend:login_view')
+def checkout(request):
+    cart = request.session.get("cart", {})
+    cart_items = []
+    cart_total = 0
+    cart_quantity_total = 0
 
-@login_required(login_url='backend:login_view')  # Redirect to login if not authenticated
-def checkout_view(request):
-   
-    cart = request.session.get('cart', {})
+    for product_id, item in cart.items():
+        try:
+            product = Product.objects.get(id=product_id)
+            name = product.name
+            price = float(product.price)
+        except Product.DoesNotExist:
+            name = "Unknown Product"
+            price = float(item.get("price", 0))
 
-    if not cart:
-        return redirect("backend:cart_detail")  # redirect if cart is empty
+        quantity = int(item.get("quantity", 0))
+        subtotal = quantity * price
 
-    # Calculate totals (example)
-    total = sum(item['price'] * item['quantity'] for item in cart.values())
+        cart_quantity_total += quantity
+        cart_total += subtotal
 
-    context = {
-        'cart': cart,
-        'total': total,
-    }
-    return render(request, "frontend/checkout.html", context)
+        cart_items.append({
+            "id": product_id,
+            "name": name,
+            "quantity": quantity,
+            "price": price,
+            "subtotal": subtotal,
+        })
+
+    return render(request, "frontend/checkout.html", {
+        "cart_items": cart_items,
+        "cart_total": cart_total,
+        "cart_quantity_total": cart_quantity_total,
+    })
 
 
+@login_required(login_url='backend:login_view')
+
+def process_checkout(request):
+    cart = request.session.get("cart", {})
+    cart_items = list(cart.values())  # 👈 get the dict of items, not keys
+
+    cart_quantity_total = sum(int(item["quantity"]) for item in cart_items)
+
+    # ✅ block if less than 10
+    if cart_quantity_total < 10:
+        messages.warning(request, "You must order at least 10 items before checkout.")
+        return redirect("frontend:checkout")
+
+    if request.method == "POST":
+        fullname = request.POST.get("fullname")
+        phone = request.POST.get("phone")
+        address = request.POST.get("address")
+
+        # ⚡️ Save to DB or log later
+        messages.success(request, "Your order has been placed successfully!")
+        return redirect("frontend:checkout")
+
+    return redirect("frontend:checkout")
 
