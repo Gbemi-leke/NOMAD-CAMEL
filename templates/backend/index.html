@@ -85,6 +85,7 @@ NOMAD-CAMEL
           </div>
         </div>
       </div>
+      {% if user.is_superuser %}
       <!-- List All Product -->
       <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
         <div class="card">
@@ -192,6 +193,7 @@ NOMAD-CAMEL
           </div>
         </div>
       </div>
+      {% endif %}
       <!--/ Transactions -->
     </div>
     <div class="row">

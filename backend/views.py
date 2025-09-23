@@ -116,7 +116,7 @@ def logout_view(request):
 
 @login_required(login_url='/auth/login/')
 def dashboard(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')[:5]
     total_users = User.objects.count()
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
