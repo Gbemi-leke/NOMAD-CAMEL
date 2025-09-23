@@ -192,43 +192,36 @@ def add_product(request):
        
     }
     return render(request, 'backend/add-products.html', context)
-
 @login_required(login_url='/auth/login/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    
 
     if request.method == 'POST':
-        product_form = ProductForm(request.POST, instance=product)
-        # size_form = ProductSizeForm(request.POST, instance=size)
+        product_form = ProductForm(request.POST, request.FILES, instance=product)  # ✅ include request.FILES
         image_form = ProductImageForm(request.POST, request.FILES)  # for adding new images
 
         if product_form.is_valid() and image_form.is_valid():
             product = product_form.save()
 
-            # size = size_form.save(commit=False)
-            # size.product = product
-            # size.save()
-
-            # Add new images if uploaded
+            # Add new extra images if uploaded
             images = request.FILES.getlist('images')
             for img in images:
                 ProductImage.objects.create(product=product, image=img)
-            messages.success(request, 'Product editted successfully!')
+
+            messages.success(request, 'Product updated successfully!')
             return redirect('backend:product-list')
 
     else:
         product_form = ProductForm(instance=product)
-        # size_form = ProductSizeForm(instance=size)
         image_form = ProductImageForm()
 
     context = {
         'product_form': product_form,
-        # 'size_form': size_form,
         'image_form': image_form,
         'product': product,
     }
     return render(request, 'backend/edit-products.html', context)
+
 
 @login_required(login_url='/auth/login/')
 def delete_product(request, pk):

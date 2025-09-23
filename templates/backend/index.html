@@ -107,7 +107,7 @@ NOMAD-CAMEL
                     {% for product in products %}
                     <tr>
                       <td><strong>{{ product.name }}</strong></td>
-                      <td><img src="{{ product.images.first.image.url }}" width="50" height="50" /></td>
+                      <td><img src="{{ product.main_image.url }}" width="50" height="50" /></td>
                       <td>₦{{ product.price }}</td>
                       <td>{{ product.quantity }}</td>
                       <td>

@@ -112,10 +112,10 @@
         let address = document.getElementById("address").value;
 
         let orderDetails = encodeURIComponent(
-            "🛒 *New Order* 🛒\n" +
-            "👤 Name: " + fullname + "\n" +
-            "📞 Phone: " + phone + "\n" +
-            "🏠 Address: " + address + "\n\n" +
+            " *New Order* \n" +
+            "Name: " + fullname + "\n" +
+            " Phone: " + phone + "\n" +
+            "Address: " + address + "\n\n" +
             "*Items Ordered:*\n"
         );
 
@@ -123,7 +123,7 @@
         orderDetails += encodeURIComponent("- {{ item.name }} (x{{ item.quantity }}) - ₦{{ item.subtotal }}\n");
         {% endfor %}
 
-        orderDetails += encodeURIComponent("\n📦 Total: ₦{{ cart_total }}");
+        orderDetails += encodeURIComponent("\n Total: ₦{{ cart_total }}");
 
 
         // Your WhatsApp business number
