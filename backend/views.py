@@ -116,7 +116,7 @@ def logout_view(request):
 
 @login_required(login_url='/auth/login/')
 def dashboard(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')[:5]
     total_users = User.objects.count()
     total_products = Product.objects.count()
     active_products = Product.objects.filter(is_active=True).count()
@@ -363,16 +363,16 @@ def password_reset_request(request):
                     email_template_name = "backend/password_reset_email.txt"
                     c = {
                         "email": user.email,
-                        'domain': '127.0.0.1:8000/',
+                        'domain': 'nomadcamel.ng',
                         'site_name':'NOMAD-CAMEL',
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
                         'token': default_token_generator.make_token(user),
-                        'protocol': 'http',
+                        'protocol': 'https',
                     }
                     email = render_to_string(email_template_name, c)
                     try:
-                        send_mail(subject, email, 'josepholuwagbemi02@gmail.com', [user.email], fail_silently=False)
+                        send_mail(subject, email, 'nomadcamelngpb@gmail.com', [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
                     return redirect("/password_reset/done/")
