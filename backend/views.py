@@ -82,7 +82,7 @@ def register(request):
             profile = Profile.objects.get(user=user)
             profile.phone = form.cleaned_data.get('phone')
             profile.gender = form.cleaned_data.get('gender')
-            profile.profile_photo = form.cleaned_data.get('profile_photo')
+            # profile.profile_photo = form.cleaned_data.get('profile_photo')
             profile.address = form.cleaned_data.get('address')
             profile.save()
 
@@ -251,7 +251,7 @@ def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     messages.success(request, 'Product deleted successfully.')
-    return redirect('backend:product_list')
+    return redirect('backend:product-list')
 
 def view_products_details(request, view_id):
     post = Product.objects.get( id=view_id)
