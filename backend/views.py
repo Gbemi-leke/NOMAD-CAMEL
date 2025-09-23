@@ -20,6 +20,19 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth import update_session_auth_hash
 from decimal import Decimal
 
+# Password Reset
+from django.conf import settings
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import BadHeaderError, send_mail
+from django.db.models import Q
+from django.http import HttpResponse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
+ #  end
+
+
 
 def login_view(request):
     if request.method == "POST":
@@ -192,25 +205,31 @@ def add_product(request):
        
     }
     return render(request, 'backend/add-products.html', context)
+
 @login_required(login_url='/auth/login/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
 
     if request.method == 'POST':
-        product_form = ProductForm(request.POST, request.FILES, instance=product)  # ✅ include request.FILES
-        image_form = ProductImageForm(request.POST, request.FILES)  # for adding new images
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        image_form = ProductImageForm(request.POST, request.FILES)
 
         if product_form.is_valid() and image_form.is_valid():
             product = product_form.save()
 
-            # Add new extra images if uploaded
-            images = request.FILES.getlist('images')
-            for img in images:
+            # ✅ Handle new uploads
+            for img in request.FILES.getlist('images'):
                 ProductImage.objects.create(product=product, image=img)
 
-            messages.success(request, 'Product updated successfully!')
-            return redirect('backend:product-list')
+            # ✅ Handle deletions
+            delete_ids = request.POST.getlist('delete_images')
+            if delete_ids:
+                ProductImage.objects.filter(id__in=delete_ids, product=product).delete()
 
+            messages.success(request, "Product updated successfully ✅")
+            return redirect('backend:product-list')
+        else:
+            messages.error(request, "There was an error updating the product ❌")
     else:
         product_form = ProductForm(instance=product)
         image_form = ProductImageForm()
@@ -222,6 +241,10 @@ def edit_product(request, pk):
     }
     return render(request, 'backend/edit-products.html', context)
 
+@login_required(login_url='/auth/login/')
+def del_products(request):
+    products = Product.objects.all()
+    return render(request, 'backend/delete_products.html', {'products': products})
 
 @login_required(login_url='/auth/login/')
 def delete_product(request, pk):
@@ -229,6 +252,10 @@ def delete_product(request, pk):
     product.delete()
     messages.success(request, 'Product deleted successfully.')
     return redirect('backend:product_list')
+
+def view_products_details(request, view_id):
+    post = Product.objects.get( id=view_id)
+    return render(request, 'backend/view_products_details.html', {'det':post})
 
 @login_required(login_url='/auth/login/')
 def product_list(request):
@@ -319,6 +346,39 @@ def change_password(request):
     else:
         change_password = PasswordChangeForm(user=request.user)
     return render(request, 'backend/change-password.html', {'pass_key':change_password})
+
+def password_reset_request(request):
+    if request.method == "POST":
+        domain = request.headers['Host']
+        password_reset_form = PasswordReset(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            # You can use more than one way like this for resetting the password.
+            # ...filter(Q(email=data) | Q(username=data))
+            # but with this you may need to change the password_reset form as well.
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "backend/password_reset_email.txt"
+                    c = {
+                        "email": user.email,
+                        'domain': '127.0.0.1:8000/',
+                        'site_name':'NOMAD-CAMEL',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, email, 'josepholuwagbemi02@gmail.com', [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("/password_reset/done/")
+    password_reset_form = PasswordReset()
+    return render(request=request, template_name="backend/password_reset.html",
+                  context={"password_reset_form": password_reset_form})
 
 
 @login_required(login_url='/auth/login/')

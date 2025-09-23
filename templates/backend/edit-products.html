@@ -7,8 +7,6 @@ Edit Product
 
 {% block content %}
 <div class="content-wrapper">
-  <!-- Content -->
-
   <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4">
       <span class="text-muted fw-light">Edit /</span> Product
@@ -22,15 +20,18 @@ Edit Product
           </div>
           <div class="card-body">
             <form method="POST" enctype="multipart/form-data">
-              {% if messages %}
-              {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-              {% endfor %}
-              {% endif %}
-
               {% csrf_token %}
+
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                {% endfor %}
+              {% endif %}
 
               <!-- Product Info -->
               <div class="mb-3">
@@ -64,18 +65,36 @@ Edit Product
               <div class="mb-3">
                 <label class="form-label">Main Image</label><br>
                 {% if product.main_image %}
-                <img src="{{ product.main_image.url }}" width="100" class="mb-2" />
+                  <img src="{{ product.main_image.url }}" width="100" class="mb-2" />
                 {% endif %}
                 {{ product_form.main_image }}
                 <small class="form-text text-muted">Upload a new image to replace the current main image.</small>
               </div>
+              
 
-              <!-- Extra Images -->
+              <!-- ✅ Extra Images -->
               <div class="mb-3">
-                <label class="form-label">Add additional Product images</label>
+                <label class="form-label">Additional Product Images</label>
+                
+                <!-- Show already uploaded images -->
+                <div class="mb-2">
+                  {% for img in product.images.all %}
+                    <div style="display:inline-block; position:relative; margin:5px;">
+                      <img src="{{ img.image.url }}" width="100" />
+                      <label style="position:absolute; top:0; right:0; background: rgba(255,255,255,0.7); padding:2px;">
+                        <input type="checkbox" name="delete_images" value="{{ img.id }}"> ×
+                      </label>
+                    </div>
+                  {% empty %}
+                    <p class="text-muted">No extra images uploaded yet.</p>
+                  {% endfor %}
+                </div>
+
+                <!-- File input for new uploads -->
                 {{ image_form.images }}
                 <small class="form-text text-muted">Hold Ctrl/Command to select multiple images.</small>
               </div>
+
               <hr>
 
               <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -87,33 +106,4 @@ Edit Product
     </div>
   </div>
 </div>
-<script>
-  document.getElementById("add-size").addEventListener("click", function () {
-    const container = document.getElementById("sizes-container");
-    const clone = container.querySelector(".size-form").cloneNode(true);
-
-    // Clear input values in the cloned form
-    clone.querySelectorAll("select, input").forEach(el => {
-      if (el.type === "number") {
-        el.value = 0;
-      } else {
-        el.selectedIndex = 0;
-      }
-    });
-
-    container.appendChild(clone);
-  });
-
-  // Optional: Remove a size form
-  document.addEventListener("click", function (e) {
-    if (e.target.classList.contains("remove-size")) {
-      const form = e.target.closest(".size-form");
-      const allForms = document.querySelectorAll(".size-form");
-      if (allForms.length > 1) {
-        form.remove();
-      }
-    }
-  });
-</script>
-
 {% endblock %}

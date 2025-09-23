@@ -27,16 +27,32 @@ Product Detail - NOMAD CAMEL
 						<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 						<div class="slick3 gallery-lb">
-							{% for img in det.images.all %}
-							<div class="item-slick3" data-thumb="{{ img.image.url }}">
-								<div class="wrap-pic-w pos-relative">
-									<img class="img-fluid" src="{{ img.image.url }}" alt="{{ det.name }}">
-									<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ img.image.url }}">
-										<i class="fa fa-expand"></i>
-									</a>
+							
+								<!-- Main Image first -->
+								{% if det.main_image %}
+								<div class="item-slick3" data-thumb="{{ det.main_image.url }}">
+									<div class="wrap-pic-w pos-relative">
+										<img class="img-fluid" src="{{ det.main_image.url }}" alt="{{ det.name }}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ det.main_image.url }}">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
 								</div>
-							</div>
-							{% endfor %}
+								{% endif %}
+
+								<!-- Extra Images -->
+								{% for img in det.images.all %}
+								<div class="item-slick3" data-thumb="{{ img.image.url }}">
+									<div class="wrap-pic-w pos-relative">
+										<img class="img-fluid" src="{{ img.image.url }}" alt="{{ det.name }}">
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ img.image.url }}">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+								{% endfor %}
+						
+
 						</div>
 					</div>
 				</div>
