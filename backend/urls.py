@@ -21,7 +21,7 @@ urlpatterns = [
     path('view-orders', views.view_orders, name='view_orders'),
     path('account', views.account, name='account'),
     path('edit-account/<int:pk>/', views.edit_account, name='edit_account'),
-    path('delete-account/<int:pk>/', views.delete_account, name='delete_account'),
+    path('delete-account', views.delete_account, name='delete_account'),
     path('account-change-password', views.change_password, name='change_password'),
     path('account/delete/', views.delete_account, name='delete-account'),
     path('my-wishlist', views.wishlist_view, name='wish'),
@@ -30,7 +30,8 @@ urlpatterns = [
     path('cart/', views.cart_detail, name='cart_detail'),
     path('cart/update/<int:product_id>/', views.update_cart, name='update_cart'),
     path('cart/remove/<int:product_id>/', views.remove_cart, name='remove_from_cart'),
-    path("checkout/", views.checkout_view, name="checkout"),
+    path("checkout/", views.checkout, name="checkout"),
+    path("checkout/process/", views.process_checkout, name="process_checkout"),
 
     # Password reset
     path("password-reset/", 

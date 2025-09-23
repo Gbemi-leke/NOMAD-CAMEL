@@ -135,7 +135,7 @@ class RegisterForm(UserCreationForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'price', 'quantity', 'is_active']
+        fields = ['name', 'description', 'price','main_image', 'quantity', 'is_active']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -150,6 +150,8 @@ class ProductForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': '0.00'
             }),
+           
+            
             'quantity': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Available quantity'
@@ -159,28 +161,17 @@ class ProductForm(forms.ModelForm):
             }),
         }
 
-class MultipleFileInput(forms.ClearableFileInput):
-    allow_multiple_selected = True
-
-class MultipleFileField(forms.FileField):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('widget', MultipleFileInput())
-        super().__init__(*args, **kwargs)
-
-    def clean(self, data, initial=None):
-        single_file_clean = super().clean
-        if isinstance(data, (list, tuple)):
-            return [single_file_clean(d, initial) for d in data]
-        return [single_file_clean(data, initial)]
 
 class ProductImageForm(forms.Form):
-    images = MultipleFileField(
-        required=True,
-        widget=MultipleFileInput(attrs={
-            'multiple': True,
-            'class': 'form-control'
+    images = forms.FileField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control',
+            'id': 'profile_photo'
         })
     )
+
+
 
 
 
