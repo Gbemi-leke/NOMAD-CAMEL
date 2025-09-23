@@ -78,12 +78,12 @@ def register(request):
             user.email = form.cleaned_data.get('email')
             user.save()
 
-            # Handle Profile data if you have extra fields
-            profile = Profile.objects.get(user=user)
+            # Update the auto-created Profile
+            profile = user.profile
             profile.phone = form.cleaned_data.get('phone')
             profile.gender = form.cleaned_data.get('gender')
-            # profile.profile_photo = form.cleaned_data.get('profile_photo')
             profile.address = form.cleaned_data.get('address')
+            profile.profile_photo = form.cleaned_data.get('profile_photo')
             profile.save()
 
             # Build email content
