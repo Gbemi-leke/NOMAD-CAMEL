@@ -124,6 +124,11 @@
                   <div data-i18n="Container">View All Products</div>
                 </a>
               </li>
+              <li class="menu-item">
+                <a href="{% url 'backend:del_products' %}" class="menu-link">
+                  <div data-i18n="Container">Delete Products</div>
+                </a>
+              </li>
 
             </ul>
           </li>
@@ -278,6 +283,15 @@
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 <!-- Core JS -->
+ <script>
+  setTimeout(function() {
+    let alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+      alert.style.display = 'none';
+    });
+  }, 4000); // hides after 4 seconds
+</script>
+
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{% static 'backend/assets/vendor/libs/jquery/jquery.js' %}"></script>
     <script src="{% static 'backend/assets/vendor/libs/popper/popper.js' %}"></script>

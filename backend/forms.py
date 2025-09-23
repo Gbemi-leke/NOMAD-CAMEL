@@ -5,6 +5,7 @@ from .models import Profile
 from django.core import validators
 from frontend.models import *
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import(PasswordResetForm, SetPasswordForm)
 
 
 class RegisterForm(UserCreationForm):
@@ -66,14 +67,7 @@ class RegisterForm(UserCreationForm):
         })
     )
 
-    profile_photo = forms.ImageField(
-        required=False,
-        widget=forms.ClearableFileInput(attrs={
-            'class': 'form-control',
-            'id': 'profile_photo'
-        })
-    )
-
+   
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -110,7 +104,7 @@ class RegisterForm(UserCreationForm):
             'email',
             'phone',
             'gender',
-            'profile_photo',
+            
             'password1',
             'password2',
             'accept_terms',
@@ -165,15 +159,11 @@ class ProductForm(forms.ModelForm):
 class ProductImageForm(forms.Form):
     images = forms.FileField(
         required=False,
-        widget=forms.ClearableFileInput(attrs={
+        widget=forms.FileInput(attrs={
             'class': 'form-control',
             'id': 'profile_photo'
         })
     )
-
-
-
-
 
 class EditUserForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -332,3 +322,11 @@ class ChangePasswordForm(PasswordChangeForm):
     new_password1 = forms.CharField(label='New Password', widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'New Password'}))
     new_password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Confirm Password'}))
     botcatcher = forms.CharField(required=False, widget=forms.HiddenInput, validators=[validators.MaxLengthValidator(0)])
+
+
+class PasswordReset(PasswordResetForm):
+    email = forms.EmailField(label='', widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter Email',}))
+    
+class SetPassword(SetPasswordForm):
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg', 'placeholder':'New Password'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control form-control-lg', 'placeholder':'Confirm Password'}))

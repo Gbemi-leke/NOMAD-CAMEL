@@ -12,6 +12,8 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('products/', views.product_list, name='product-list'),
     path('products/add/', views.add_product, name='add-product'),
+    path('delete_products/', views.del_products, name='del_products'),
+    path('view_products_details/<int:view_id>', views.view_products_details, name='view_products_details'),
     path('products/edit/<int:pk>/', views.edit_product, name='edit-product'),
     path('products/delete/<int:pk>/', views.delete_product, name='delete-product'),
     path('users/', views.user_list, name='user-list'),
@@ -32,23 +34,11 @@ urlpatterns = [
     path('cart/remove/<int:product_id>/', views.remove_cart, name='remove_from_cart'),
     path("checkout/", views.checkout, name="checkout"),
     path("checkout/process/", views.process_checkout, name="process_checkout"),
+#     path('product-image/<int:pk>/delete/', views.delete_product_image, name='delete_product_image'),
+
 
     # Password reset
-    path("password-reset/", 
-         auth_views.PasswordResetView.as_view(template_name="backend/password-reset.html"),
-         name="password_reset"),
-    
-    path("password-reset/done/", 
-         auth_views.PasswordResetDoneView.as_view(template_name="backend/password-reset-done.html"),
-         name="password_reset_done"),
-    
-    path("reset/<uidb64>/<token>/", 
-         auth_views.PasswordResetConfirmView.as_view(template_name="backend/password-reset-confirm.html"),
-         name="password_reset_confirm"),
-    
-    path("reset/done/", 
-         auth_views.PasswordResetCompleteView.as_view(template_name="backend/password-reset-complete.html"),
-         name="password_reset_complete"),
+    path('password_reset/', views.password_reset_request, name='password_reset_request'),
 
 
 ]

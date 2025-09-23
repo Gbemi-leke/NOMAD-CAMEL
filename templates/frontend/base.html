@@ -832,6 +832,14 @@
 										==================================================-->
 	<script src="{% static 'frontend/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
 	<script>
+	setTimeout(function() {
+		let alerts = document.querySelectorAll('.alert');
+		alerts.forEach(alert => {
+		alert.style.display = 'none';
+		});
+	}, 4000); // hides after 4 seconds
+	</script>
+	<script>
 		$('.js-pscroll').each(function () {
 			$(this).css('position', 'relative');
 			$(this).css('overflow', 'hidden');
