@@ -259,7 +259,7 @@ def view_products_details(request, view_id):
 
 @login_required(login_url='/auth/login/')
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')
     return render(request, 'backend/view-product-list.html', {'products': products})
 
 @login_required(login_url='/auth/login/')

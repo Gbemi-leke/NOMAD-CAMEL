@@ -67,14 +67,7 @@ class RegisterForm(UserCreationForm):
         })
     )
 
-    profile_photo = forms.ImageField(
-        required=False,
-        widget=forms.ClearableFileInput(attrs={
-            'class': 'form-control',
-            'id': 'profile_photo'
-        })
-    )
-
+   
     password1 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(attrs={
@@ -111,7 +104,7 @@ class RegisterForm(UserCreationForm):
             'email',
             'phone',
             'gender',
-            'profile_photo',
+            
             'password1',
             'password2',
             'accept_terms',

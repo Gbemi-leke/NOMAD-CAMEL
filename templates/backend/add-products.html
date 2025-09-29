@@ -63,6 +63,14 @@ Add Product
                 </div>
 
                 <hr>
+                <div class="mb-3">
+                  <label class="form-label">Main Image</label><br>
+                    {% if product.main_image %}
+                      <img src="{{ product.main_image.url }}" width="100" class="mb-2" />
+                    {% endif %}
+                    {{ product_form.main_image }}
+                  <small class="form-text text-muted">Upload a new image to replace the current main image.</small>
+                </div>
 
                 <!-- Product Images -->
                 <div class="mb-3">

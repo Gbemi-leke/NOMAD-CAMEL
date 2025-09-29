@@ -16,12 +16,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     profile_photo = models.ImageField(upload_to='profiles/', blank=True, null=True)
     
-    @receiver(post_save, sender=User)
-    def create_or_update_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-        else:
-            instance.profile.save()
+    
             
     def __str__(self):
         return self.user.username
