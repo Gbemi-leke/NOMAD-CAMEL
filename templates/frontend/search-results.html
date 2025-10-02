@@ -1,41 +1,63 @@
-{% extends 'backend/base.html' %}
+{% extends 'frontend/base.html' %}
 {% load static %}
-
+{% block title %}
+{{ query }}
+{% endblock %}
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4">Search Results</h2>
+    <h2 class="mb-4 mt-5">Search Results</h2>
 
     {% if query %}
         <p class="text-muted">Showing results for: <strong>{{ query }}</strong></p>
     {% endif %}
 
-    {% if products %}
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm h-100">
-                        {% if product.image %}
-                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+   {% if products %}
+    <div class="row isotope-grid">
+        {% for product in products %}
+            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+                <div class="block2">
+                    <div class="block2-pic hov-img0" style="height: 310px;">
+                        {% if product.main_image %}
+                            <img src="{{ product.main_image.url }}" alt="{{ product.name }}" style="width: 100%; height: 100%; object-fit: cover;">
                         {% else %}
-                            <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image">
+                            <img src="{% static 'frontend/images/about-01.jpg' %}" alt="No image" style="width: 100%; height: 100%; object-fit: cover;">
                         {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">
-                                {{ product.description|truncatewords:20 }}
-                            </p>
-                            <a href="{% url 'frontend:product_detail' product.id %}" class="btn btn-primary btn-sm">
-                                View Details
+
+                        <a href="{% url 'frontend:product_details' product.id %}"
+                           class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                           Quick View
+                        </a>
+                    </div>
+
+                    <div class="block2-txt flex-w flex-t p-t-14">
+                        <div class="block2-txt-child1 flex-col-l">
+                            <a href="{% url 'frontend:product_details' product.id %}" 
+                               class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                {{ product.name }}
+                            </a>
+                            <span class="stext-105 cl3">₦{{ product.price }}</span>
+                        </div>
+
+                        <div class="block2-txt-child2 flex-r p-t-3">
+                            <a href="#" 
+                               class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" 
+                               data-id="{{ product.id }}">
+                                <img class="icon-heart1 dis-block trans-04"
+                                     src="{% static 'frontend/images/icons/icon-heart-01.png' %}" alt="ICON">
+                                <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                     src="{% static 'frontend/images/icons/icon-heart-02.png' %}" alt="ICON">
                             </a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <div class="alert alert-warning">
-            No products found matching your search.
-        </div>
+    <div class="alert alert-warning text-center">
+        No products found matching your search.
+    </div>
     {% endif %}
+
 </div>
 {% endblock %}
