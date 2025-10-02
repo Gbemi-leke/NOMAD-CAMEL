@@ -11,7 +11,9 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     # path('cart', views.cart, name='cart'),
     path('wishlist/toggle/<int:product_id>/', views.toggle_wishlist, name='toggle-wishlist'),
-    path('load-more-products/', views.load_more_products, name='load_more_products')
+    path('load-more-products/', views.load_more_products, name='load_more_products'),
+    path("search/", views.search_products, name="search-products"),
+
 
 
 

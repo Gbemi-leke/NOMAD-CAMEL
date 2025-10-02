@@ -154,7 +154,7 @@ def dashboard(request):
 def add_product(request):
     product = None
     if request.method == 'POST':
-        product_form = ProductForm(request.POST)
+        product_form = ProductForm(request.POST, request.FILES)
         image_form = ProductImageForm(request.POST, request.FILES)
         # size_form = ProductSizeForm(request.POST)
 
@@ -251,7 +251,7 @@ def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     product.delete()
     messages.success(request, 'Product deleted successfully.')
-    return redirect('backend:product_list')
+    return redirect('backend:product-list')
 
 def view_products_details(request, view_id):
     post = Product.objects.get( id=view_id)

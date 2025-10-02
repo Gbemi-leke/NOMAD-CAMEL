@@ -11,6 +11,7 @@ from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
+from django.db.models import Q
 
 
 # Create your views here.
@@ -25,7 +26,7 @@ def about(request):
     return render(request, 'frontend/about.html')
 
 def product(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')
     return render(request, 'frontend/product.html', {'pro': products})
 
 
@@ -95,3 +96,21 @@ def load_more_products(request):
         'products': data,
         'has_next': page_obj.has_next()
     })
+
+
+
+def search_products(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.all()
+
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query)
+        )
+
+    context = {
+        'products': products,
+        'query': query,
+    }
+    return render(request, 'frontend/search-results.html', context)
