@@ -243,7 +243,7 @@ def edit_product(request, pk):
 
 @login_required(login_url='/auth/login/')
 def del_products(request):
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')
     return render(request, 'backend/delete_products.html', {'products': products})
 
 @login_required(login_url='/auth/login/')

@@ -22,7 +22,7 @@ NOMAD-CAMEL
           <div class="d-flex align-items-end row">
             <div class="col-sm-7">
               <div class="card-body">
-                <h5 class="card-title text-primary">Welcome {{ user.username}}! 🎉</h5>
+                <h5 class="card-title text-primary">Welcome {{ user.username}}! ðŸŽ‰</h5>
                 <p class="mb-4">
                   Our power banks are designed to be your trusted companions, providing fast and reliable charging whenever and wherever you need it.
                 </p>
@@ -108,11 +108,7 @@ NOMAD-CAMEL
                     {% for product in products %}
                     <tr>
                       <td><strong>{{ product.name }}</strong></td>
-                      {% if product.main_image %}
-                         <img src="{{ product.main_image.url }}" width="50" height="50" />
-                      {% else %}
-                         <img src="{% static 'frontend/images/about-01.jpg' %}" width="50" height="50" />
-                      {% endif %}
+                      <td><img src="{{ product.main_image.url }}" width="50" height="50" /></td>
                       <td>₦{{ product.price }}</td>
                       <td>{{ product.quantity }}</td>
                       <td>
