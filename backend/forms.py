@@ -156,15 +156,36 @@ class ProductForm(forms.ModelForm):
         }
 
 
-class ProductImageForm(forms.Form):
-    images = forms.FileField(
-        required=False,
-        widget=forms.FileInput(attrs={
-            'class': 'form-control',
-            'id': 'profile_photo'
-        })
-    )
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
 
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
+
+class ProductImageForm(forms.ModelForm):
+    images = MultipleFileField(label='Select files',required=False,
+        widget=MultipleFileInput(attrs={
+            'class': 'form-control',
+            'multiple': True,
+            'id': 'id_images'
+        }))
+    
+
+    class Meta:
+        model = ProductImage
+        fields = ['images', ]
+        
+        
 class EditUserForm(forms.ModelForm):
     first_name = forms.CharField(
         max_length=30,

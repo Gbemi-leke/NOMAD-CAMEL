@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 from django.db.models import Q
-
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -27,8 +27,12 @@ def about(request):
 
 def product(request):
     products = Product.objects.order_by('-created_at')
-    return render(request, 'frontend/product.html', {'pro': products})
+    paginator = Paginator(products, 8) 
 
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'frontend/product.html', {'page_obj': page_obj})
 
 def product_details(request, product_id):
     product_detail =Product.objects.get(id=product_id)
